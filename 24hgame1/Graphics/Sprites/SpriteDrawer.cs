@@ -91,7 +91,7 @@ namespace hgame1.Graphics.Sprites
 			GL.BufferData (BufferTarget.ArrayBuffer, (IntPtr)(buffer.Count * SpriteDrawData.SizeInBytes), rawBuffer, BufferUsageHint.StreamDraw);
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
-
+			Console.WriteLine ("Uploaded " + buffer.Count + " sprites to GPU");
 
 			// Clear the buffer list
 			buffer.Clear ();
@@ -104,6 +104,8 @@ namespace hgame1.Graphics.Sprites
 		{
 			// Bind the vbo
 			GL.BindVertexArray(vao);
+
+			int counter = 0;
 
 			// Loop through all shaders
 			foreach (var shader in drawList) 
@@ -125,6 +127,8 @@ namespace hgame1.Graphics.Sprites
 					// Draw the points using offsets in SpriteDrawParameters
 					GL.DrawArrays (BeginMode.Points, param.Offset, param.Count);	
 
+					counter++;
+
 					// Unind the texture
 					texture.Key.UnBind();
 				}
@@ -135,6 +139,8 @@ namespace hgame1.Graphics.Sprites
 
 			// Unbind the vbo
 			GL.BindVertexArray(0);
+
+			Console.WriteLine ("Drew with " + counter + " different textures");
 
 			// Clear the draw list
 			drawList.Clear ();

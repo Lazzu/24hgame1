@@ -79,15 +79,19 @@ namespace hgame1
 		{
 			base.OnUpdateFrame (e);
 
-			SpriteDrawData drawdata = new SpriteDrawData ();
 
-			drawdata.Color = new Vector4 (1, 1, 1, 1);
-			drawdata.TranslateData = new Vector3 (0, 0, 0);
-			drawdata.Texdata = new Vector3 (sprite.TextureCoordinates.X, sprite.TextureCoordinates.Y, sprite.Size);
 
 			for(int i=0; i<1000; i++)
 			{
-				drawdata.TranslateData = new Vector3 ((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble());
+				SpriteDrawData drawdata = new SpriteDrawData ();
+
+				drawdata.Color = new Vector4 (1, 1, 1, 1);
+				drawdata.Texdata = new Vector3 (sprite.TextureCoordinates.X, sprite.TextureCoordinates.Y, sprite.Size);
+				drawdata.TranslateData = new Vector3 ((float)(Math.Sin(e.Time * i) + 0.5) * 1280, (float)(Math.Sin(e.Time * i) + 0.5) * 800, (float)r.NextDouble());
+				//drawdata.TranslateData = new Vector3 (640, 400, (float)r.NextDouble());
+
+				//Console.WriteLine (drawdata.TranslateData);
+
 				SpriteDrawer.AddSprite (sprite, drawdata);
 			}
 
