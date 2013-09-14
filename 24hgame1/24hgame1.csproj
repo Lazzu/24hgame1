@@ -37,15 +37,22 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Graphics\GraphicsSettings.cs" />
     <Compile Include="Graphics\Sprites\SpriteDrawer.cs" />
+    <Compile Include="Graphics\ResourceDisposer.cs" />
+    <Compile Include="Graphics\Sprites\SpriteBatch.cs" />
+    <Compile Include="Graphics\Textures\Texture.cs" />
+    <Compile Include="Graphics\Textures\TextureManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
       <Private>False</Private>
       <Package>opentk</Package>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Graphics\" />
     <Folder Include="Graphics\Sprites\" />
+    <Folder Include="Graphics\Textures\" />
   </ItemGroup>
 </Project>
