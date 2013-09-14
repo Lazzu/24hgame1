@@ -75,7 +75,7 @@ namespace hgame1.Graphics.Sprites
 
 				foreach (var drawGroup2 in drawGroup.Value) 
 				{
-					int count = drawGroup.Value.Count;
+					int count = drawGroup2.Value.Count;
 
 					drawList[drawGroup.Key].Add (drawGroup2.Key, new SpriteDrawParameters (offset, count));
 
@@ -127,6 +127,8 @@ namespace hgame1.Graphics.Sprites
 					// Draw the points using offsets in SpriteDrawParameters
 					GL.DrawArrays (BeginMode.Points, param.Offset, param.Count);	
 
+					Console.WriteLine ("Drew sprites with offset of " + param.Offset + " and count " + param.Count);
+
 					counter++;
 
 					// Unind the texture
@@ -140,7 +142,7 @@ namespace hgame1.Graphics.Sprites
 			// Unbind the vbo
 			GL.BindVertexArray(0);
 
-			Console.WriteLine ("Drew with " + counter + " different textures");
+			Console.WriteLine ("Drew with " + counter + " different shaders/textures combinations");
 
 			// Clear the draw list
 			drawList.Clear ();

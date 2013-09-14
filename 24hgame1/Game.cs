@@ -87,7 +87,7 @@ namespace hgame1
 
 				drawdata.Color = new Vector4 (1, 1, 1, 1);
 				drawdata.Texdata = new Vector3 (sprite.TextureCoordinates.X, sprite.TextureCoordinates.Y, sprite.Size);
-				drawdata.TranslateData = new Vector3 ((float)(Math.Sin(e.Time * i) + 0.5) * 1280, (float)(Math.Sin(e.Time * i) + 0.5) * 800, (float)r.NextDouble());
+				drawdata.TranslateData = new Vector3 ((float)(Math.Sin(e.Time * i) + 0.5) * (float)r.NextDouble() * 640, (float)(Math.Cos(e.Time * i) + 0.5) * (float)r.NextDouble() * 400, (float)r.NextDouble());
 				//drawdata.TranslateData = new Vector3 (640, 400, (float)r.NextDouble());
 
 				//Console.WriteLine (drawdata.TranslateData);

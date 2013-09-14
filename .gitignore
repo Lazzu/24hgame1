@@ -2,6 +2,8 @@
 [Bb]in/
 [Oo]bj/
 
+!./24hgame1/24hgame1/Graphics/Models/Loaders/Obj/
+
 # mstest test results
 TestResults
 
