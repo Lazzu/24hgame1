@@ -43,6 +43,7 @@ namespace hgame1
 			// Initialize GUI
 			Gui.Initialize (this);
 
+			VSync = VSyncMode.On;
 		}
 
 		Sprite sprite;
@@ -85,17 +86,19 @@ namespace hgame1
 			base.OnUpdateFrame (e);
 
 			if (Keyboard [OpenTK.Input.Key.A])
-				Camera.Move (new Vector2 (1000, 0) * (float)e.Time);
+				Camera.Move (new Vector2 (1, 0) / (float)e.Time);
 
 			if (Keyboard [OpenTK.Input.Key.D])
-				Camera.Move (new Vector2 (-1000, 0) * (float)e.Time);
+				Camera.Move (new Vector2 (-1, 0) / (float)e.Time);
 
 			if (Keyboard [OpenTK.Input.Key.W])
-				Camera.Move (new Vector2 (0, 1000) * (float)e.Time);
+				Camera.Move (new Vector2 (0, 1) / (float)e.Time);
 
 			if (Keyboard [OpenTK.Input.Key.S])
-				Camera.Move (new Vector2 (0, -1000) * (float)e.Time);
+				Camera.Move (new Vector2 (0, -1) / (float)e.Time);
 
+			if (Keyboard [OpenTK.Input.Key.Space])
+				Camera.MoveAtInstantly (new Vector2 (Width/2, Height/2));
 
 			for(int i=0; i<100; i++)
 			{

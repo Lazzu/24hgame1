@@ -58,7 +58,7 @@ namespace hgame1.Graphics
 
 		static void HandleUpdateFrame (object sender, FrameEventArgs e)
 		{
-			position += (positionTarget - position) / 8;
+			position += (positionTarget - position) / 4; // Calculate camera position easing
 
 			Matrix4.CreateTranslation (ref position, out ViewMatrix);
 		}
