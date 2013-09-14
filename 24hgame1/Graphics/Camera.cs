@@ -8,6 +8,7 @@ namespace hgame1.Graphics
 		public static Matrix4 ProjectionMatrix;
 		public static Matrix4 ViewMatrix;
 		public static Matrix4 MVPMatrix;
+		public static Matrix4 NormalMatrix;
 
 		static GameWindow gameW;
 
@@ -31,6 +32,13 @@ namespace hgame1.Graphics
 			position = new Vector3(pos);
 		}
 
+		public static void UseModelMatrix(ref Matrix4 modelMatrix)
+		{
+			MVPMatrix = ProjectionMatrix * ViewMatrix * modelMatrix;
+			NormalMatrix = ViewMatrix * modelMatrix;
+			NormalMatrix.Invert ();
+		}
+
 		public static void Init(GameWindow gw)
 		{
 			gameW = gw;
@@ -40,7 +48,7 @@ namespace hgame1.Graphics
 
 		static void HandleResize (object sender, EventArgs e)
 		{
-			ProjectionMatrix = Matrix4.CreateOrthographicOffCenter (0, gameW.Width, gameW.Height, 0, 0, 1);
+			ProjectionMatrix = Matrix4.CreateOrthographicOffCenter (0, gameW.Width, gameW.Height, 0, 0, -1);
 		}
 
 		static void HandleUpdateFrame (object sender, FrameEventArgs e)

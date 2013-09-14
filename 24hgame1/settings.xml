@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Graphics>
+    <Width>1280</Width>
+    <Height>800</Height>
+    <MSAA>0</MSAA>
+  </Graphics>
+  <ResourcePath>Content</ResourcePath>
+  <TexturePath>Textures</TexturePath>
+  <ShaderPath>Shaders</ShaderPath>
+</Settings>
