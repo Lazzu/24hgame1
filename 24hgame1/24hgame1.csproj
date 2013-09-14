@@ -32,6 +32,8 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="CharacterEntities\Character.cs" />
+    <Compile Include="CharacterEntities\Properties\Characterenums.cs" />
     <Compile Include="Gamearea\GameArea.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game.cs" />
@@ -75,8 +77,5 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CharacterEntities\" />
-    <Folder Include="Utilities\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
