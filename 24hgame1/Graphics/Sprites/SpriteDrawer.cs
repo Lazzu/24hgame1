@@ -12,7 +12,7 @@ namespace hgame1.Graphics.Sprites
 		static Dictionary<ShaderProgram, Dictionary<Texture, List<SpriteDrawData>>> drawQueue = new Dictionary<ShaderProgram, Dictionary<Texture, List<SpriteDrawData>>>();
 		static Dictionary<ShaderProgram, Dictionary<Texture, SpriteDrawParameters>> drawList = new Dictionary<ShaderProgram, Dictionary<Texture, SpriteDrawParameters>>();
 
-		static uint vbo;
+		static uint vbo, vao;
 
 		static List<SpriteDrawData> buffer = new List<SpriteDrawData> ();
 		static SpriteDrawData[] rawBuffer = new SpriteDrawData[1];
@@ -26,8 +26,10 @@ namespace hgame1.Graphics.Sprites
 		static void HandleLoad (object sender, EventArgs e)
 		{
 			int stride = BlittableValueType.StrideOf (rawBuffer);
-			// Generate the VBO and set it's settings
+			// Generate the VAO and set it's settings
+			GL.GenVertexArrays(1, out vao);
 			GL.GenBuffers (1, out vbo);
+			GL.BindVertexArray(vao);
 			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 			GL.EnableVertexAttribArray(0);
 			GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
@@ -35,7 +37,7 @@ namespace hgame1.Graphics.Sprites
 			GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, stride, Vector3.SizeInBytes);
 			GL.EnableVertexAttribArray(2);
 			GL.VertexAttribPointer(2, 4, VertexAttribPointerType.Float, false, stride, Vector3.SizeInBytes * 2);
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+			GL.BindVertexArray(0);
 		}
 
 		static void HandleRenderFrame (object sender, FrameEventArgs e)
@@ -99,7 +101,7 @@ namespace hgame1.Graphics.Sprites
 		static void Render()
 		{
 			// Bind the vbo
-			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+			GL.BindVertexArray(vao);
 
 			// Loop through all shaders
 			foreach (var shader in drawList) 
@@ -119,22 +121,16 @@ namespace hgame1.Graphics.Sprites
 					// Draw the points using offsets in SpriteDrawParameters
 					GL.DrawArrays (BeginMode.Points, param.Offset, param.Count);	
 
-					// Bind the texture
+					// Unind the texture
 					texture.Key.UnBind();
 				}
 
-				// Enable the shader
+				// Disable the shader
 				shader.Key.Disable ();
 			}
 
-			// Unbind the texture to prevent graphical glitches
-
-
-			// Disable the shader to prevent graphical glitches
-
-
 			// Unbind the vbo
-			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+			GL.BindVertexArray(0);
 
 			// Clear the draw list
 			drawList.Clear ();
