@@ -5,10 +5,10 @@ namespace hgame1.Graphics
 {
 	public static class Camera
 	{
-		public static Matrix4 ProjectionMatrix;
-		public static Matrix4 ViewMatrix;
-		public static Matrix4 MVPMatrix;
-		public static Matrix4 NormalMatrix;
+		public static Matrix4 ProjectionMatrix = Matrix4.Identity;
+		public static Matrix4 ViewMatrix = Matrix4.Identity;
+		public static Matrix4 MVPMatrix = Matrix4.Identity;
+		public static Matrix4 NormalMatrix = Matrix4.Identity;
 
 		static GameWindow gameW;
 
@@ -19,6 +19,11 @@ namespace hgame1.Graphics
 			private set {
 				position = new Vector3(value);
 			}
+		}
+
+		public static void Move(Vector2 pos)
+		{
+			positionTarget -= new Vector3(pos);
 		}
 
 		public static void MoveAt(Vector2 pos)

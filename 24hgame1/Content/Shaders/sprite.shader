@@ -14,6 +14,7 @@
   </Shaders>
   <Uniforms>
     <Uniform>mP</Uniform>
+    <Uniform>mV</Uniform>
     <Uniform>textureSampler</Uniform>
   </Uniforms>
 </ShaderProgram>
