@@ -64,9 +64,9 @@ namespace hgame1.Tilemap
 				{
 					Tile tile = tilemap [i, j];
 
-					Sprite floor = TileSet.Tiles [tile.Floortexturename];
-					Sprite wall = TileSet.Tiles [tile.Walltexturename];
-					Sprite ceiling = TileSet.Tiles [tile.Ceilingtexturename];
+					Sprite floor = TileSet.Tiles [tile.Floorspritename];
+					Sprite wall = TileSet.Tiles [tile.Wallspritename];
+					Sprite ceiling = TileSet.Tiles [tile.Ceilingspritename];
 
 					SpriteDrawData floordrawdata = new SpriteDrawData ();
 					floordrawdata.Color = new Vector4(1,1,1,1);
