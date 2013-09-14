@@ -7,7 +7,7 @@ namespace hgame1.AI
 {
     static class Pathfinder
     {
-        static private int[,] PathMap { get; private set; }
+        static public int[,] PathMap { get; private set; }
 
         public static void setPathMap(int[,] _pathmap)
         {
