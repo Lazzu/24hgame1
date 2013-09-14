@@ -7,6 +7,7 @@ namespace hgame1.Graphics.Shaders
 	[XmlType("ShaderProgram")]
 	public class ShaderProgramXml
 	{
+		[XmlAttribute]
 		public string Name {
 			get;
 			set;

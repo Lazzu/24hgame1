@@ -39,6 +39,8 @@ namespace hgame1.Graphics.Shaders
 		/// <param name="type">Shader type.</param>
 		public static Shader FromFile(string file, ShaderType type)
 		{
+			file = Settings.CurrentSettings.GetShaderPath (file);
+
 			// Check if file path already exists in the dictionary
 			if(shaders.ContainsKey(file))
 			{

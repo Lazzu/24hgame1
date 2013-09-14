@@ -91,6 +91,8 @@ namespace hgame1.Graphics.Sprites
 			GL.BufferData (BufferTarget.ArrayBuffer, (IntPtr)(buffer.Count * SpriteDrawData.SizeInBytes), rawBuffer, BufferUsageHint.StreamDraw);
 			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
+
+
 			// Clear the buffer list
 			buffer.Clear ();
 
@@ -108,6 +110,8 @@ namespace hgame1.Graphics.Sprites
 			{
 				// Enable the shader
 				shader.Key.Enable ();
+
+				shader.Key.SendUniform ("mP", ref Camera.ProjectionMatrix);
 
 				// Loop through all textures
 				foreach (var texture in shader.Value) 
@@ -131,6 +135,12 @@ namespace hgame1.Graphics.Sprites
 
 			// Unbind the vbo
 			GL.BindVertexArray(0);
+
+			foreach (var item in drawList) {
+				foreach (var item2 in item.Value) {
+					Console.WriteLine (item2.Value.Offset);
+				}
+			}
 
 			// Clear the draw list
 			drawList.Clear ();

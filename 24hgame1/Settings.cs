@@ -50,6 +50,11 @@ namespace hgame1
 			return Path.Combine (resourcePath, Path.Combine (texturePath, file));
 		}
 
+		public string GetShaderPath(string file)
+		{
+			return Path.Combine (resourcePath, Path.Combine (shaderPath, file));
+		}
+
 		public static readonly Settings DefaultSettings = new Settings();
 		public static Settings CurrentSettings = new Settings();
 	}
