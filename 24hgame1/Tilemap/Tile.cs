@@ -15,7 +15,11 @@ namespace hgame1.Tilemap
         public string Walltexturename {get; private set; }
         public string Ceilingtexturename {get; private set; }
 
-
+        //Auxilary tile properties
+        public Walltype Tilewalltype { get; private set; }
+        public Doorstate Tiledoorstate { get; private set; }
+        public Doortype Tiledoortype { get; private set; }
+        public Doordirection Tiledoordirection { get; private set; }
 
         //basic constructor that greates basictile
         public Tile()
