@@ -52,7 +52,7 @@ namespace hgame1.Tilemap.Properties
     /// <summary>
     /// Window brokestate
     /// </summary>
-    public enum WindowType{
+    public enum WindowState{
         Intact,
         Broken
     }
