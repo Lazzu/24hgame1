@@ -107,13 +107,13 @@
     <Compile Include="Graphics\Models\ModelManager.cs" />
     <Compile Include="Graphics\Models\Primitives.cs" />
     <Compile Include="Graphics\Models\Loaders\IModelLoader.cs" />
-    <Compile Include="Graphics\Models\Loaders\Obj\ModelLoader.cs" />
     <Compile Include="Graphics\Rendering\ModelRenderProperties.cs" />
     <Compile Include="Graphics\Rendering\ModelRenderer.cs" />
     <Compile Include="Graphics\Rendering\ShaderRenderGroup.cs" />
     <Compile Include="Graphics\IRenderable.cs" />
     <Compile Include="Graphics\Text.cs" />
     <Compile Include="Graphics\GraphicsHelpers.cs" />
+    <Compile Include="Graphics\Models\Loaders\WavefrontObj\ModelLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">

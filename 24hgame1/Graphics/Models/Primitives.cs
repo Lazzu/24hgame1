@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using OpenTK;
-using hgame1.Graphics.Models.Loaders.Obj;
 using OpenTK.Graphics.OpenGL;
 
 namespace hgame1.Graphics.Models
