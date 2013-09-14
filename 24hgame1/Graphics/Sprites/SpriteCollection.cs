@@ -16,6 +16,10 @@ namespace hgame1.Graphics.Sprites
 			get {
 				return Sprites [name];
 			}
+            set
+            {
+                throw new NotImplementedException();
+            }
 		}
 
 

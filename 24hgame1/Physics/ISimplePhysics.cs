@@ -7,7 +7,7 @@ namespace hgame1.Physics
 {
     interface ISimplePhysics
     {
-        float travelspeed;
-        float traveldirection;
+        float travelspeed { get;  set; }
+        float traveldirection { get;  set; }
     }
 }
