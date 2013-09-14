@@ -7,6 +7,11 @@ namespace hgame1.Graphics.Particles
 		public ParticleEmitter ()
 		{
 		}
+
+		public Particle[] Emit()
+		{
+			return null;
+		}
 	}
 }
 
