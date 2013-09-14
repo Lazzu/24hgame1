@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -32,6 +32,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="Gamearea\GameArea.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Settings.cs" />
@@ -45,6 +46,9 @@
     <Compile Include="Graphics\Shaders\ShaderProgram.cs" />
     <Compile Include="Graphics\Sprites\SpriteDrawData.cs" />
     <Compile Include="Graphics\Sprites\SpriteDrawParameters.cs" />
+    <Compile Include="Tilemap\Properties\Tileenums.cs" />
+    <Compile Include="Tilemap\Tile.cs" />
+    <Compile Include="Tilemap\Tilemap.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
@@ -59,5 +63,6 @@
     <Folder Include="Graphics\Sprites\" />
     <Folder Include="Graphics\Textures\" />
     <Folder Include="Graphics\Shaders\" />
+    <Folder Include="CharacterEntities\" />
   </ItemGroup>
 </Project>
