@@ -10,7 +10,7 @@ namespace hgame1
 		string resourcePath;
 		public string ResourcePath {
 			get {
-				return resourcePath + "/";
+				return resourcePath + @"/";
 			}
 			set {
 				resourcePath = value;
@@ -20,7 +20,7 @@ namespace hgame1
 		string texturePath;
 		public string TexturePath {
 			get {
-				return resourcePath + "/" + texturePath + "/";
+				return resourcePath + @"/" + texturePath + @"/";
 			}
 			set {
 				texturePath = value;
@@ -30,7 +30,7 @@ namespace hgame1
 		string shaderPath;
 		public string ShaderPath {
 			get {
-				return resourcePath + "/" + shaderPath + "/";
+				return resourcePath + @"/" + shaderPath + @"/";
 			}
 			set {
 				shaderPath = value;
