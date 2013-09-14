@@ -4,16 +4,20 @@ using System.Linq;
 using System.Text;
 using OpenTK;
 using hgame1.AI.Properties;
+using hgame1.Tilemap;
+using hgame1.Tilemap.Properties;
 
 namespace hgame1.AI
 {
     public class Pathfinder
     {
+        
+        private Tile[,] currentTileMap;
 
         public List<Node> closedList;
         public List<Node> openList;
 
-        public Node TranslateToNode(float _x, float _y)
+        public Node TranslateToNode(int _x, int _y)
         {
             Node tempNode = new Node(_x,_y,1,1);
             
@@ -48,16 +52,25 @@ namespace hgame1.AI
                     for (int k = 0; k < 3; k++)
                     {
                         Node tempnode = new Node(q.X - 1 + j, q.Y - 1 + k);
-                        tempnode.set_g((int)(q.G + Math.Abs((q.X - tempnode.X) + (q.Y - tempnode.Y))));
-                        tempnode.set_h((int)Math.Abs(_endpoint.X - tempnode.X + _endpoint.Y - tempnode.Y));
-                        tempnode.set_f();
-                        successors.Add(tempnode);
+                        if ((this.currentTileMap[tempnode.X, tempnode.Y].Tileproperty == Tiletype.Floor) ||
+                            (this.currentTileMap[tempnode.X, tempnode.Y].Tileproperty == Tiletype.Door) ||
+                            (this.currentTileMap[tempnode.X, tempnode.Y].Tileproperty == Tiletype.FloorCeiling))
+                        {
+                            tempnode.set_g((int)(q.G + Math.Abs((q.X - tempnode.X) + (q.Y - tempnode.Y))));
+                            tempnode.set_h((int)Math.Abs(_endpoint.X - tempnode.X + _endpoint.Y - tempnode.Y));
+                            tempnode.calculate_f();
+                            successors.Add(tempnode);
+                        }
                     }
                 }
 
                 // Go through successors
                 foreach(Node successornode in successors){
                     bool skip = false;
+                    if(successornode.X == _endpoint.X && successornode.Y == _endpoint.Y){
+                        this.openList.Clear();
+                        skip = true;
+                    }
                     foreach(Node againstopen in openList)
                     {
                         if((againstopen.X == successornode.X) && (againstopen.Y == successornode.Y)){
