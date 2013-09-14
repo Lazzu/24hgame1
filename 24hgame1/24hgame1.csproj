@@ -96,6 +96,7 @@
     </None>
     <None Include="Content\Shaders\sprite.shader">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
 </Project>
