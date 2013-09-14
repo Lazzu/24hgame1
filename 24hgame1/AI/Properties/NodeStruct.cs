@@ -23,6 +23,12 @@ namespace hgame1.AI.Properties
             this.F = _g + _h;
         }
 
+        public Node(float _x, float _y)
+        {
+            this.X = _x;
+            this.Y = _y;
+        }
+
         public void set_f()
         {
             this.F = this.G + this.H;
@@ -31,6 +37,11 @@ namespace hgame1.AI.Properties
         public void set_h(int _h)
         {
             this.H = _h;
+        }
+
+        public void set_g(int _g)
+        {
+            this.G = _g;
         }
 
         public void set_x(float _x)
@@ -42,6 +53,7 @@ namespace hgame1.AI.Properties
         {
             this.Y = _y;
         }
+
 
         public void set_parent(ref Node _parent)
         {
