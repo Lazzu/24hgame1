@@ -32,6 +32,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="AI\AIentity.cs" />
+    <Compile Include="AI\Pathfinder.cs" />
+    <Compile Include="AI\Properties\AIenums.cs" />
     <Compile Include="CharacterEntities\Character.cs" />
     <Compile Include="CharacterEntities\Properties\Characterenums.cs" />
     <Compile Include="Gamearea\GameArea.cs" />
@@ -77,11 +80,7 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\" />
-    <Folder Include="Content\Textures\" />
-    <Folder Include="Content\Shaders\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Content\Shaders\sprite.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
