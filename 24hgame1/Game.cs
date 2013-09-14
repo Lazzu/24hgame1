@@ -32,6 +32,8 @@ namespace hgame1
 			// Camera initialization
 			Camera.Init (this);
 
+			Camera.MoveAtInstantly (new Vector2 ((Width / 2), (Height / 2)));
+
 			// Texture manager initialization
 			TextureManager.Init (this);
 
@@ -40,6 +42,7 @@ namespace hgame1
 
 			// Initialize GUI
 			Gui.Initialize (this);
+
 		}
 
 		Sprite sprite;
@@ -74,20 +77,33 @@ namespace hgame1
 		}
 
 		Random r = new Random ();
-
+		double totalTime = 0;
 		protected override void OnUpdateFrame (FrameEventArgs e)
 		{
+			totalTime += e.Time;
+
 			base.OnUpdateFrame (e);
 
+			if (Keyboard [OpenTK.Input.Key.A])
+				Camera.Move (new Vector2 (1000, 0) * (float)e.Time);
+
+			if (Keyboard [OpenTK.Input.Key.D])
+				Camera.Move (new Vector2 (-1000, 0) * (float)e.Time);
+
+			if (Keyboard [OpenTK.Input.Key.W])
+				Camera.Move (new Vector2 (0, 1000) * (float)e.Time);
+
+			if (Keyboard [OpenTK.Input.Key.S])
+				Camera.Move (new Vector2 (0, -1000) * (float)e.Time);
 
 
-			for(int i=0; i<1000; i++)
+			for(int i=0; i<100; i++)
 			{
 				SpriteDrawData drawdata = new SpriteDrawData ();
 
 				drawdata.Color = new Vector4 (1, 1, 1, 1);
 				drawdata.Texdata = new Vector3 (sprite.TextureCoordinates.X, sprite.TextureCoordinates.Y, sprite.Size);
-				drawdata.TranslateData = new Vector3 ((float)(Math.Sin(e.Time * i) + 0.5) * (float)r.NextDouble() * 640, (float)(Math.Cos(e.Time * i) + 0.5) * (float)r.NextDouble() * 400, (float)r.NextDouble());
+				drawdata.TranslateData = new Vector3 ((float)(Math.Sin(totalTime + i) + 0.5) * 160, (float)(Math.Cos(totalTime + i) + 0.5) * 100, (float)r.NextDouble());
 				//drawdata.TranslateData = new Vector3 (640, 400, (float)r.NextDouble());
 
 				//Console.WriteLine (drawdata.TranslateData);
