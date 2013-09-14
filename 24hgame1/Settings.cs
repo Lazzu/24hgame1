@@ -1,5 +1,6 @@
 using System;
 using hgame1.Graphics;
+using System.IO;
 
 namespace hgame1
 {
@@ -10,7 +11,7 @@ namespace hgame1
 		string resourcePath;
 		public string ResourcePath {
 			get {
-				return resourcePath + @"/";
+				return resourcePath;
 			}
 			set {
 				resourcePath = value;
@@ -20,7 +21,7 @@ namespace hgame1
 		string texturePath;
 		public string TexturePath {
 			get {
-				return resourcePath + @"/" + texturePath + @"/";
+				return texturePath;
 			}
 			set {
 				texturePath = value;
@@ -30,7 +31,7 @@ namespace hgame1
 		string shaderPath;
 		public string ShaderPath {
 			get {
-				return resourcePath + @"/" + shaderPath + @"/";
+				return shaderPath;
 			}
 			set {
 				shaderPath = value;
@@ -44,6 +45,12 @@ namespace hgame1
 			shaderPath = "Shaders";
 		}
 
+		public string GetTexturePath(string file)
+		{
+			return Path.Combine (resourcePath, Path.Combine (texturePath, file));
+		}
+
+		public static readonly Settings DefaultSettings = new Settings();
 		public static Settings CurrentSettings = new Settings();
 	}
 }

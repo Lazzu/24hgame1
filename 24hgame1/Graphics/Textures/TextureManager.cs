@@ -50,7 +50,7 @@ namespace hgame1.Graphics.Textures
 		public static Texture LoadTexture (string file, string name = null)
 		{
 			// TODO: Find out the correct path from settings or somewhere else
-			string path = Settings.CurrentSettings.TexturePath + file;
+			string path = Settings.CurrentSettings.GetTexturePath(file);
 
 			// See if at least the file exists
 			if (String.IsNullOrEmpty (file))
