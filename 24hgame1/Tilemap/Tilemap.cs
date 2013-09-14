@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using hgame1.Tilemap.Properties;
+using hgame1.Graphics.Sprites;
 
 namespace hgame1.Tilemap
 {
@@ -10,6 +11,8 @@ namespace hgame1.Tilemap
     {
         //tilemap
         public Tile[,] tilemap {get; private set;}
+
+		public SpriteCollection Tileset { get; set;}
 
         private int Tilemapwidth, Tilemapheight;
 
