@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using hgame1.Tilemap.Properties;
 using hgame1.Graphics.Sprites;
+using OpenTK;
+using hgame1.Graphics;
 
 namespace hgame1.Tilemap
 {
@@ -12,7 +14,7 @@ namespace hgame1.Tilemap
         //tilemap
         public Tile[,] tilemap {get; private set;}
 
-		public SpriteCollection Tileset { get; set;}
+		public TileSet TileSet { get; set; }
 
         private int Tilemapwidth, Tilemapheight;
 
@@ -31,5 +33,62 @@ namespace hgame1.Tilemap
                 }
             }
         }
+
+		public void Draw()
+		{
+			Box2 bounds = Camera.ScreenBounds;
+
+			bounds.Bottom = bounds.Bottom / TileSet.TileSize;
+
+			int xmin = (int)(bounds.Left / TileSet.TileSize);
+			int xmax = (int)(bounds.Right / TileSet.TileSize);
+
+			int ymin = (int)(bounds.Top / TileSet.TileSize);
+			int ymax = (int)(bounds.Bottom / TileSet.TileSize);
+
+			if (xmin < 0)
+				xmin = 0;
+
+			if (xmax > Tilemapwidth)
+				xmax = Tilemapwidth;
+
+			if (ymin < 0)
+				ymin = 0;
+
+			if (ymax > Tilemapheight)
+				ymax = Tilemapheight;
+
+			for (int i = xmin; i < xmax; i++ )
+			{
+				for (int j = ymin; j < ymax; j++ )
+				{
+					Tile tile = tilemap [i, j];
+
+					Sprite floor = TileSet.Tiles [tile.Floortexturename];
+					Sprite wall = TileSet.Tiles [tile.Walltexturename];
+					Sprite ceiling = TileSet.Tiles [tile.Ceilingtexturename];
+
+					SpriteDrawData floordrawdata = new SpriteDrawData ();
+					floordrawdata.Color = new Vector4(1,1,1,1);
+					floordrawdata.Texdata = new Vector3 (floor.TextureCoordinates.X, floor.TextureCoordinates.Y, TileSet.TileSize);
+					floordrawdata.TranslateData = new Vector3 (i*TileSet.TileSize,j*TileSet.TileSize,0);
+
+					SpriteDrawData walldrawdata = new SpriteDrawData ();
+					walldrawdata.Color = new Vector4(1,1,1,1);
+					walldrawdata.Texdata = new Vector3 (wall.TextureCoordinates.X, wall.TextureCoordinates.Y, TileSet.TileSize);
+					walldrawdata.TranslateData = new Vector3 (i*TileSet.TileSize,j*TileSet.TileSize,0);
+
+					SpriteDrawData ceilingdrawdata = new SpriteDrawData ();
+					ceilingdrawdata.Color = new Vector4(1,1,1,1);
+					ceilingdrawdata.Texdata = new Vector3 (ceiling.TextureCoordinates.X, ceiling.TextureCoordinates.Y, TileSet.TileSize);
+					ceilingdrawdata.TranslateData = new Vector3 (i*TileSet.TileSize,j*TileSet.TileSize,0);
+
+					SpriteDrawer.AddSprite (floor, floordrawdata);
+					SpriteDrawer.AddSprite (wall, walldrawdata);
+					SpriteDrawer.AddSprite (ceiling, ceilingdrawdata);
+
+				}
+			}
+		}
     }
 }

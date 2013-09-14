@@ -21,6 +21,16 @@ namespace hgame1.Graphics
 			}
 		}
 
+		public static Box2 ScreenBounds {
+			get {
+				Vector2 size = new Vector2 (gameW.Width, gameW.Height);
+
+				Box2 bounds = new Box2 (position.Xy, position.Xy + size);
+
+				return bounds;
+			}
+		}
+
 		public static void Move(Vector2 pos)
 		{
 			positionTarget -= new Vector3(pos);
