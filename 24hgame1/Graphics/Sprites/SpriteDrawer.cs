@@ -136,12 +136,6 @@ namespace hgame1.Graphics.Sprites
 			// Unbind the vbo
 			GL.BindVertexArray(0);
 
-			foreach (var item in drawList) {
-				foreach (var item2 in item.Value) {
-					Console.WriteLine (item2.Value.Offset);
-				}
-			}
-
 			// Clear the draw list
 			drawList.Clear ();
 		}
