@@ -10,11 +10,11 @@ namespace hgame1.Graphics.Sprites
 		public Texture Texture;
 		public ShaderProgram Shader;
 
-		public Box2 TextureCoordinates;
+		public Vector2 TextureCoordinates;
 
 		public int Size;
 
-		public Sprite (Texture t, ShaderProgram s, int sz, Box2 tc)
+		public Sprite (Texture t, ShaderProgram s, int sz, Vector2 tc)
 		{
 			Texture = t;
 			Shader = s;

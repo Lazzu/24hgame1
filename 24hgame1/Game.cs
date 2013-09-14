@@ -44,8 +44,10 @@ namespace hgame1
 			TextureManager.LoadTexture("default.png", "default");
 			ShaderProgramManager.LoadXml ("sprite", "sprite.shader");
 
-			sprite = new Sprite(TextureManager.Get("default"), ShaderProgramManager.Get("sprite"), 100, new Box2() );
+			sprite = new Sprite(TextureManager.Get("default"), ShaderProgramManager.Get("sprite"), 100, new Vector2(0,0) );
 		}
+
+		Random r = new Random ();
 
 		protected override void OnUpdateFrame (FrameEventArgs e)
 		{
@@ -55,9 +57,16 @@ namespace hgame1
 
 			drawdata.Color = new Vector4 (1, 1, 1, 1);
 			drawdata.TranslateData = new Vector3 (0, 0, 0);
-			drawdata.Texdata = new Vector3 (0, 0, sprite.Size);
+			drawdata.Texdata = new Vector3 (sprite.TextureCoordinates.X, sprite.TextureCoordinates.Y, sprite.Size);
 
-			SpriteDrawer.AddSprite (sprite, drawdata);
+
+			for(int i=0; i<1000; i++)
+			{
+				drawdata.TranslateData = new Vector3 (r.NextDouble(), r.NextDouble(), r.NextDouble());
+				SpriteDrawer.AddSprite (sprite, drawdata);
+			}
+
+				
 		}
 
 		protected override void OnRenderFrame (FrameEventArgs e)
