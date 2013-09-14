@@ -119,6 +119,7 @@
     <Compile Include="Graphics\Particles\ParticleEngine.cs" />
     <Compile Include="Graphics\Particles\ParticleEmitter.cs" />
     <Compile Include="Graphics\Sprites\SpriteCollection.cs" />
+    <Compile Include="Tilemap\TileSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
