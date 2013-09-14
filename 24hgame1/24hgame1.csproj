@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +37,10 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Graphics\GraphicsSettings.cs" />
     <Compile Include="Graphics\Sprites\SpriteDrawer.cs" />
+    <Compile Include="Graphics\ResourceDisposer.cs" />
+    <Compile Include="Graphics\Sprites\SpriteBatch.cs" />
+    <Compile Include="Graphics\Textures\Texture.cs" />
+    <Compile Include="Graphics\Textures\TextureManager.cs" />
     <Compile Include="Tilemap\Properties\Tileenums.cs" />
     <Compile Include="Tilemap\Tile.cs" />
     <Compile Include="Tilemap\Tilemap.cs" />
@@ -44,6 +48,12 @@
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Graphics\" />
+    <Folder Include="Graphics\Sprites\" />
+    <Folder Include="Graphics\Textures\" />
+  </ItemGroup>
 </Project>
