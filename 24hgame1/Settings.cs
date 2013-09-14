@@ -43,6 +43,8 @@ namespace hgame1
 			texturePath = "Textures";
 			shaderPath = "Shaders";
 		}
+
+		public static Settings CurrentSettings = new Settings();
 	}
 }
 
