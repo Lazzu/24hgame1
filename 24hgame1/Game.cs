@@ -2,6 +2,7 @@ using System;
 using OpenTK;
 using OpenTK.Graphics;
 using hgame1.Graphics.Sprites;
+using hgame1.Graphics.Textures;
 
 namespace hgame1
 {
@@ -19,6 +20,11 @@ namespace hgame1
 		                                       3, 3, 
 		                                       GraphicsContextFlags.Default)
 		{
+			// Set current settings
+			Settings.CurrentSettings = settings;
+
+			// Texture manager initialization
+			TextureManager.Init (this);
 
 			// Initialize spritedrawer
 			SpriteDrawer.Initialize (this);
@@ -26,7 +32,10 @@ namespace hgame1
 
 		protected override void OnLoad (EventArgs e)
 		{
+			TextureManager.LoadTexture("default.png", "default");
+
 			base.OnLoad (e);
+
 		}
 
 		protected override void OnUpdateFrame (FrameEventArgs e)

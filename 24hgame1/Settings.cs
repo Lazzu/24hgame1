@@ -10,7 +10,7 @@ namespace hgame1
 		string resourcePath;
 		public string ResourcePath {
 			get {
-				return resourcePath;
+				return resourcePath + "/";
 			}
 			set {
 				resourcePath = value;
@@ -20,18 +20,31 @@ namespace hgame1
 		string texturePath;
 		public string TexturePath {
 			get {
-				return resourcePath + texturePath;
+				return resourcePath + "/" + texturePath + "/";
 			}
 			set {
 				texturePath = value;
 			}
 		}
 
+		string shaderPath;
+		public string ShaderPath {
+			get {
+				return resourcePath + "/" + shaderPath + "/";
+			}
+			set {
+				shaderPath = value;
+			}
+		}
+
 		public Settings ()
 		{
-			resourcePath = "content/";
-			texturePath = "textures/";
+			resourcePath = "Content";
+			texturePath = "Textures";
+			shaderPath = "Shaders";
 		}
+
+		public static Settings CurrentSettings = new Settings();
 	}
 }
 
