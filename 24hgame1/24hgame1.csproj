@@ -38,6 +38,7 @@
     <Compile Include="CharacterEntities\Character.cs" />
     <Compile Include="CharacterEntities\Properties\Characterenums.cs" />
     <Compile Include="Gamearea\GameArea.cs" />
+    <Compile Include="Gamearea\Properties\Characterenums.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Settings.cs" />
@@ -70,6 +71,8 @@
     <Compile Include="Utilities\XmlReader.cs" />
     <Compile Include="Utilities\XmlWriter.cs" />
     <Compile Include="Graphics\Camera.cs" />
+    <Compile Include="Weapons\Projectile.cs" />
+    <Compile Include="Weapons\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
