@@ -19,7 +19,32 @@ namespace hgame1.Graphics.Sprites
 
 		public static void Initialize(GameWindow gw)
 		{
+			gw.Load += HandleLoad;
+			gw.RenderFrame += HandleRenderFrame;
+		}
 
+		static void HandleLoad (object sender, EventArgs e)
+		{
+			int stride = BlittableValueType.StrideOf (rawBuffer);
+			// Generate the VBO and set it's settings
+			GL.GenBuffers (1, out vbo);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+			GL.EnableVertexAttribArray(0);
+			GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
+			GL.EnableVertexAttribArray(1);
+			GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, stride, Vector3.SizeInBytes);
+			GL.EnableVertexAttribArray(2);
+			GL.VertexAttribPointer(2, 4, VertexAttribPointerType.Float, false, stride, Vector3.SizeInBytes * 2);
+			GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+		}
+
+		static void HandleRenderFrame (object sender, FrameEventArgs e)
+		{
+			// Upload data to GPU
+			Upload ();
+
+			// Render the sprites
+			Render ();
 		}
 
 		public static void AddSprite(Sprite sprite, SpriteDrawData drawdata)
