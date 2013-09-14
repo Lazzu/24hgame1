@@ -21,10 +21,8 @@ namespace hgame1.AI
 
         public Node TranslateToNode(float _x, float _y)
         {
-            Node tempNode;
-            tempNode.set_x(_x);
-            tempNode.set_y(_y);
-
+            Node tempNode = new Node(_x,_y,1,1);
+            
             return tempNode;
         }
 

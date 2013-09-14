@@ -13,6 +13,7 @@ namespace hgame1.Gamearea
     class GameArea
     {
         public Tilemap.Tilemap MapTiles { get; private set; }
+        Pathfinder pathfinder = new Pathfinder();
 
         public List<Character> AIcharacters;
         public List<Character> Playercharacters;
@@ -21,7 +22,7 @@ namespace hgame1.Gamearea
         {
             this.MapTiles = new Tilemap.Tilemap(_gameareawidth,_gameareaheight);
             this.MapTiles.Populatetilemap();
-            Pathfinder.setPathMap(this.MapTiles.getBlockedmap());
+            pathfinder.setPathMap(this.MapTiles.getBlockedmap());
         }
 
         public void AddPlayer (string _name, int _health ,Vector2 _location, float _direction)
