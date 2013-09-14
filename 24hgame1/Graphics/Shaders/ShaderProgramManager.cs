@@ -33,6 +33,8 @@ namespace hgame1.Graphics.Shaders
 
 		public static ShaderProgram LoadXml(string file)
 		{
+			file = Settings.CurrentSettings.GetShaderPath (file);
+
 			if(ProgramExists(file))
 			{
 				return programs [file];
