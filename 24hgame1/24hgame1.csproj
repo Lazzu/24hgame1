@@ -59,10 +59,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Graphics\" />
-    <Folder Include="Graphics\Sprites\" />
-    <Folder Include="Graphics\Textures\" />
-    <Folder Include="Graphics\Shaders\" />
     <Folder Include="CharacterEntities\" />
   </ItemGroup>
 </Project>
