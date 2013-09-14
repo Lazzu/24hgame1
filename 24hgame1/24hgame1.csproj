@@ -41,6 +41,10 @@
     <Compile Include="Graphics\Sprites\SpriteBatch.cs" />
     <Compile Include="Graphics\Textures\Texture.cs" />
     <Compile Include="Graphics\Textures\TextureManager.cs" />
+    <Compile Include="Graphics\Sprites\Sprite.cs" />
+    <Compile Include="Graphics\Shaders\ShaderProgram.cs" />
+    <Compile Include="Graphics\Sprites\SpriteDrawData.cs" />
+    <Compile Include="Graphics\Sprites\SpriteDrawParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
@@ -54,5 +58,6 @@
     <Folder Include="Graphics\" />
     <Folder Include="Graphics\Sprites\" />
     <Folder Include="Graphics\Textures\" />
+    <Folder Include="Graphics\Shaders\" />
   </ItemGroup>
 </Project>
