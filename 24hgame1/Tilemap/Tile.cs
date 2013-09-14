@@ -11,9 +11,9 @@ namespace hgame1.Tilemap
         public Tiletype Tileproperty{ get; private set;}
 
         // Textures used at floor, walls and ceiling;
-        public string Floortexturename { get; private set; }
-        public string Walltexturename {get; private set; }
-        public string Ceilingtexturename {get; private set; }
+        public string Floorspritename { get; private set; }
+        public string Wallspritename {get; private set; }
+        public string Ceilingspritename {get; private set; }
 
         //Auxilary tile properties
         public Walltype Tilewalltype { get; private set; }
@@ -28,9 +28,9 @@ namespace hgame1.Tilemap
         public Tile()
         {
             this.Tileproperty = Tiletype.Floor;
-            this.Floortexturename = "basictile";
-            this.Walltexturename = "basictile";
-            this.Ceilingtexturename = "basictile";
+            this.Floorspritename = "basicsprite";
+            this.Wallspritename = "basicsprite";
+            this.Ceilingspritename = "basicsprite";
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace hgame1.Tilemap
         public Tile(string _floortexture)
         {
             this.Tileproperty = Tiletype.Floor;
-            this.Floortexturename = _floortexture;
+            this.Floorspritename = _floortexture;
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace hgame1.Tilemap
         public Tile(string _floortexture, string _ceilingtexture)
         {
             this.Tileproperty = Tiletype.FloorCeiling;
-            this.Floortexturename = _floortexture;
-            this.Ceilingtexturename = _ceilingtexture;
+            this.Floorspritename = _floortexture;
+            this.Ceilingspritename = _ceilingtexture;
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace hgame1.Tilemap
         {
             this.Tileproperty = Tiletype.Wall;
             this.Tilewalltype = _walltype;
-            this.Walltexturename = _walltexture;
-            this.Ceilingtexturename = _ceilingtexture;
+            this.Wallspritename = _walltexture;
+            this.Ceilingspritename = _ceilingtexture;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace hgame1.Tilemap
         {
             this.Tileproperty = Tiletype.WallWindow;
             this.Tilewindowstate = _windowstate;
-            this.Walltexturename = _walltexture;
+            this.Wallspritename = _walltexture;
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace hgame1.Tilemap
             this.Tiledoortype = _doortype;
             this.Tiledoorstate = _doorstate;
             this.Tiledoordirection = _doordirection;
-            this.Floortexturename = _floorTexture;
+            this.Floorspritename = _floorTexture;
         }
     }
 }
