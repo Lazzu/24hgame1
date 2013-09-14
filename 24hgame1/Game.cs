@@ -62,7 +62,7 @@ namespace hgame1
 
 			for(int i=0; i<1000; i++)
 			{
-				drawdata.TranslateData = new Vector3 (r.NextDouble(), r.NextDouble(), r.NextDouble());
+				drawdata.TranslateData = new Vector3 ((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble());
 				SpriteDrawer.AddSprite (sprite, drawdata);
 			}
 
