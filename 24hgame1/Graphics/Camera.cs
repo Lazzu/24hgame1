@@ -8,6 +8,7 @@ namespace hgame1.Graphics
 		public static Matrix4 ProjectionMatrix;
 		public static Matrix4 ViewMatrix;
 		public static Matrix4 MVPMatrix;
+		public static Matrix4 NormalMatrix;
 
 		static GameWindow gameW;
 
@@ -29,6 +30,13 @@ namespace hgame1.Graphics
 		{
 			positionTarget = new Vector3(pos);
 			position = new Vector3(pos);
+		}
+
+		public static void UseModelMatrix(ref Matrix4 modelMatrix)
+		{
+			MVPMatrix = ProjectionMatrix * ViewMatrix * modelMatrix;
+			NormalMatrix = ViewMatrix * modelMatrix;
+			NormalMatrix.Invert ();
 		}
 
 		public static void Init(GameWindow gw)

@@ -3,6 +3,8 @@ using hgame1.Utilities;
 using System.IO;
 using hgame1.Graphics.Shaders;
 using OpenTK.Graphics.OpenGL;
+using hgame1.Graphics.GUI;
+using hgame1.Graphics.GUI.Drawers;
 
 namespace hgame1
 {

@@ -20,6 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>full</DebugType>
@@ -29,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -73,6 +75,44 @@
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Weapons\Projectile.cs" />
     <Compile Include="Weapons\Weapon.cs" />
+    <Compile Include="Graphics\GUI\Container.cs" />
+    <Compile Include="Graphics\GUI\Gui.cs" />
+    <Compile Include="Graphics\GUI\GuiDrawerSettings.cs" />
+    <Compile Include="Graphics\GUI\GuiSettings.cs" />
+    <Compile Include="Graphics\GUI\GuiSkinner.cs" />
+    <Compile Include="Graphics\GUI\MessageBox.cs" />
+    <Compile Include="Graphics\GUI\Controllers\Button.cs" />
+    <Compile Include="Graphics\GUI\Controllers\GuiController.cs" />
+    <Compile Include="Graphics\GUI\Controllers\Image.cs" />
+    <Compile Include="Graphics\GUI\Controllers\Label.cs" />
+    <Compile Include="Graphics\GUI\Controllers\ProgressBar.cs" />
+    <Compile Include="Graphics\GUI\Controllers\Containers\GuiControllerContainer.cs" />
+    <Compile Include="Graphics\GUI\Controllers\Containers\ScrollableContainer.cs" />
+    <Compile Include="Graphics\GUI\Controllers\Windows\Window.cs" />
+    <Compile Include="Graphics\GUI\Drawers\ButtonDrawer.cs" />
+    <Compile Include="Graphics\GUI\Drawers\ButtonDrawerSettings.cs" />
+    <Compile Include="Graphics\GUI\Drawers\GuiDrawerManager.cs" />
+    <Compile Include="Graphics\GUI\Drawers\IGuiDrawer.cs" />
+    <Compile Include="Graphics\GUI\Drawers\ImageDrawer.cs" />
+    <Compile Include="Graphics\GUI\Drawers\LabelDrawer.cs" />
+    <Compile Include="Graphics\GUI\Drawers\TexturedWindowDrawer.cs" />
+    <Compile Include="Graphics\GUI\Drawers\TexturedWindowDrawerSettings.cs" />
+    <Compile Include="Graphics\GUI\Drawers\WindowDrawer.cs" />
+    <Compile Include="Graphics\GUI\Drawers\WindowDrawerSettings.cs" />
+    <Compile Include="Graphics\GUI\Events\GuiEventArgument.cs" />
+    <Compile Include="Graphics\Models\Mesh.cs" />
+    <Compile Include="Graphics\Models\MeshElement.cs" />
+    <Compile Include="Graphics\Models\Model.cs" />
+    <Compile Include="Graphics\Models\ModelManager.cs" />
+    <Compile Include="Graphics\Models\Primitives.cs" />
+    <Compile Include="Graphics\Models\Loaders\IModelLoader.cs" />
+    <Compile Include="Graphics\Models\Loaders\Obj\ModelLoader.cs" />
+    <Compile Include="Graphics\Rendering\ModelRenderProperties.cs" />
+    <Compile Include="Graphics\Rendering\ModelRenderer.cs" />
+    <Compile Include="Graphics\Rendering\ShaderRenderGroup.cs" />
+    <Compile Include="Graphics\IRenderable.cs" />
+    <Compile Include="Graphics\Text.cs" />
+    <Compile Include="Graphics\GraphicsHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
@@ -97,5 +137,31 @@
     <None Include="Content\Shaders\sprite.shader">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="gui.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Shaders\gui\draw.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Shaders\gui\draw.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\gui\default\mouse\mouse.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Shaders\gui\button.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Shaders\gui\colored.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="settings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Graphics\Models\" />
+    <Folder Include="Graphics\GUI\" />
+    <Folder Include="Graphics\Rendering\" />
+    <Folder Include="Content\Shaders\gui\" />
+    <Folder Include="Content\Textures\gui\" />
   </ItemGroup>
 </Project>
