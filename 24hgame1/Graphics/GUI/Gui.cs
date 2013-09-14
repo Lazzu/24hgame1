@@ -61,13 +61,13 @@ namespace hgame1.Graphics.GUI
 			gw.KeyDown += HandleKeyDown;
 			gw.KeyPress += HandleKeyPress;
 
-			MouseCursor = new hgame1.Graphics.GUI.Controllers.Image ();
-			MouseCursor.Visible = true;
-			MouseCursor.GrabInput = false;
-			MouseCursor.Z = int.MaxValue;
-			MouseCursor.Value = "gui/" + Settings.MouseSkin + "/mouse/mouse.png";
+			//MouseCursor = new hgame1.Graphics.GUI.Controllers.Image ();
+			//MouseCursor.Visible = true;
+			//MouseCursor.GrabInput = false;
+			//MouseCursor.Z = int.MaxValue;
+			//MouseCursor.Value = "gui/" + Settings.MouseSkin + "/mouse/mouse.png";
 
-			Gui.Add (MouseCursor);
+			//Gui.Add (MouseCursor);
         }
 
         static void HandleRenderFrame (object sender, FrameEventArgs e)
@@ -123,7 +123,7 @@ namespace hgame1.Graphics.GUI
         {
 			MouseOnGui = false;
 
-			MouseCursor.Position = new Vector2 (e.Position.X, e.Position.Y);
+			//MouseCursor.Position = new Vector2 (e.Position.X, e.Position.Y);
 
 			Controllers.MouseMove (e);
         }

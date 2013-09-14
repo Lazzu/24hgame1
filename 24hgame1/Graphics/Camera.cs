@@ -48,7 +48,7 @@ namespace hgame1.Graphics
 
 		static void HandleResize (object sender, EventArgs e)
 		{
-			ProjectionMatrix = Matrix4.CreateOrthographicOffCenter (0, gameW.Width, gameW.Height, 0, 0, 1);
+			ProjectionMatrix = Matrix4.CreateOrthographicOffCenter (0, gameW.Width, gameW.Height, 0, 0, -1);
 		}
 
 		static void HandleUpdateFrame (object sender, FrameEventArgs e)
