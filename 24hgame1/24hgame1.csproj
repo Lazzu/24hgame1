@@ -37,6 +37,7 @@
     <Compile Include="AI\AIentity.cs" />
     <Compile Include="AI\Pathfinder.cs" />
     <Compile Include="AI\Properties\AIenums.cs" />
+    <Compile Include="AI\Properties\NodeStruct.cs" />
     <Compile Include="CharacterEntities\Character.cs" />
     <Compile Include="CharacterEntities\Properties\Characterenums.cs" />
     <Compile Include="Gamearea\GameArea.cs" />
@@ -158,11 +159,5 @@
     </None>
     <None Include="settings.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphics\Models\" />
-    <Folder Include="Graphics\GUI\" />
-    <Folder Include="Graphics\Rendering\" />
-    <Folder Include="Content\Shaders\gui\" />
-    <Folder Include="Content\Textures\gui\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
