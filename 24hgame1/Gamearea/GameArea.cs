@@ -22,7 +22,6 @@ namespace hgame1.Gamearea
         {
             this.MapTiles = new Tilemap.Tilemap(_gameareawidth,_gameareaheight);
             this.MapTiles.Populatetilemap();
-            pathfinder.setPathMap(this.MapTiles.getBlockedmap());
         }
 
         public void AddPlayer (string _name, int _health ,Vector2 _location, float _direction)

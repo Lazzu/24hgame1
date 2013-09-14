@@ -28,24 +28,5 @@ namespace hgame1.Tilemap
                 }
             }
         }
-
-        public int[,] getBlockedmap()
-        {
-            int [,] pathmap = new int[this.Tilemapwidth,this.Tilemapheight];
-            for (int i = 0; i < this.Tilemapheight; i++)
-            {
-                for (int j = 0; j < this.Tilemapwidth; )
-                {
-                    if(this.tilemap[i,j].Tileproperty == Tiletype.Floor || this.tilemap[i,j].Tileproperty == Tiletype.FloorCeiling){
-                        pathmap[i,j] = 1;
-                    }else if(this.tilemap[i,j].Tileproperty == Tiletype.Door){
-                        pathmap[i,j] = 2;
-                    }else{
-                        pathmap[i,j] = 0;
-                    }
-                }
-            }
-            return pathmap;
-        }
     }
 }
