@@ -5,7 +5,13 @@ using System.Text;
 
 namespace hgame1.AI
 {
-    class Pathfinder
+    static class Pathfinder
     {
+        static private int[,] PathMap { get; private set; }
+
+        public static void setPathMap(int[,] _pathmap)
+        {
+            PathMap = _pathmap;
+        }
     }
 }
