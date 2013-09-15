@@ -67,28 +67,44 @@ namespace hgame1.Tilemap
 				{
 					Tile tile = tilemap [i, j];
 
-					Sprite floor = TileSet.Tiles [tile.Floorspritename];
-					Sprite wall = TileSet.Tiles [tile.Wallspritename];
-					Sprite ceiling = TileSet.Tiles [tile.Ceilingspritename];
+                    if(tile.Tileproperty == Tiletype.Floor ||
+                        tile.Tileproperty == Tiletype.FloorCeiling ||
+                        tile.Tileproperty == Tiletype.Door)
+                    {
+                        Sprite floor = TileSet.Tiles[tile.Floorspritename];
+                        
+                        SpriteDrawData floordrawdata = new SpriteDrawData();
+                        floordrawdata.Color = new Vector4(1, 1, 1, 1);
+                        floordrawdata.Texdata = new Vector3(floor.TextureCoordinates.X, floor.TextureCoordinates.Y, TileSet.TileSize);
+                        floordrawdata.TranslateData = new Vector3(i * TileSet.TileSize, j * TileSet.TileSize, 0);
+                        
+                        SpriteDrawer.AddSprite(floor, floordrawdata);
+                    }
+					
+                    if(tile.Tileproperty == Tiletype.Wall)
+                    {
+                        Sprite wall = TileSet.Tiles[tile.Wallspritename];
+                        
+                        SpriteDrawData walldrawdata = new SpriteDrawData();
+                        walldrawdata.Color = new Vector4(1, 1, 1, 1);
+                        walldrawdata.Texdata = new Vector3(wall.TextureCoordinates.X, wall.TextureCoordinates.Y, TileSet.TileSize);
+                        walldrawdata.TranslateData = new Vector3(i * TileSet.TileSize, j * TileSet.TileSize, 0);
 
-					SpriteDrawData floordrawdata = new SpriteDrawData ();
-					floordrawdata.Color = new Vector4(1,1,1,1);
-					floordrawdata.Texdata = new Vector3 (floor.TextureCoordinates.X, floor.TextureCoordinates.Y, TileSet.TileSize);
-					floordrawdata.TranslateData = new Vector3 (i*TileSet.TileSize,j*TileSet.TileSize,0);
+                        SpriteDrawer.AddSprite(wall, walldrawdata);
+                    }
 
-					SpriteDrawData walldrawdata = new SpriteDrawData ();
-					walldrawdata.Color = new Vector4(1,1,1,1);
-					walldrawdata.Texdata = new Vector3 (wall.TextureCoordinates.X, wall.TextureCoordinates.Y, TileSet.TileSize);
-					walldrawdata.TranslateData = new Vector3 (i*TileSet.TileSize,j*TileSet.TileSize,0);
+                    if (tile.Tileproperty == Tiletype.FloorCeiling ||
+                        tile.Tileproperty == Tiletype.Wall)
+                    {
 
-					SpriteDrawData ceilingdrawdata = new SpriteDrawData ();
-					ceilingdrawdata.Color = new Vector4(1,1,1,1);
-					ceilingdrawdata.Texdata = new Vector3 (ceiling.TextureCoordinates.X, ceiling.TextureCoordinates.Y, TileSet.TileSize);
-					ceilingdrawdata.TranslateData = new Vector3 (i*TileSet.TileSize,j*TileSet.TileSize,0);
+                        Sprite ceiling = TileSet.Tiles[tile.Ceilingspritename];
+                        SpriteDrawData ceilingdrawdata = new SpriteDrawData();
+                        ceilingdrawdata.Color = new Vector4(1, 1, 1, 1);
+                        ceilingdrawdata.Texdata = new Vector3(ceiling.TextureCoordinates.X, ceiling.TextureCoordinates.Y, TileSet.TileSize);
+                        ceilingdrawdata.TranslateData = new Vector3(i * TileSet.TileSize, j * TileSet.TileSize, 0);
 
-					SpriteDrawer.AddSprite (floor, floordrawdata);
-					SpriteDrawer.AddSprite (wall, walldrawdata);
-					SpriteDrawer.AddSprite (ceiling, ceilingdrawdata);
+                        SpriteDrawer.AddSprite(ceiling, ceilingdrawdata);
+                    }
 				}
 			}
 		}
