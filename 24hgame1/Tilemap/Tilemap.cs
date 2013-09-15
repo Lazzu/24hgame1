@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using hgame1.Tilemap.Properties;
 using hgame1.Graphics.Sprites;
+using hgame1.Graphics.Shaders;
+using hgame1.Graphics.Textures;
 using OpenTK;
 using hgame1.Graphics;
 using hgame1.AI;
@@ -24,6 +26,7 @@ namespace hgame1.Tilemap
             this.Tilemapwidth = _tilemapwidth;
             this.Tilemapheight = _tilemapheight;
 			TileSet = new TileSet { TileSize = _tileSize };
+            this.TileSet.Tiles.Add("basicsprite", new Sprite(TextureManager.Get("default"), ShaderProgramManager.Get("sprite"), 100, new Vector2(0,0) ));
         }
 
         public void Populatetilemap(){
