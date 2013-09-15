@@ -43,8 +43,6 @@ namespace hgame1.Tilemap
 		{
 			Box2 bounds = Camera.ScreenBounds;
 
-			bounds.Bottom = bounds.Bottom / TileSet.TileSize;
-
 			int xmin = (int)(bounds.Left / TileSet.TileSize);
 			int xmax = (int)(bounds.Right / TileSet.TileSize);
 
