@@ -9,6 +9,7 @@ using OpenTK.Graphics.OpenGL;
 using hgame1.Graphics.GUI;
 using hgame1.Graphics.GUI.Controllers;
 using System.Drawing;
+using hgame1.Gamearea;
 
 namespace hgame1
 {
@@ -50,6 +51,8 @@ namespace hgame1
 
 		Label lblFPS;
 
+        GameArea Gamearea;
+
 		protected override void OnLoad (EventArgs e)
 		{
 			GL.Enable (EnableCap.DepthTest);
@@ -73,6 +76,8 @@ namespace hgame1
 			lblFPS.Font = new Font (FontFamily.GenericMonospace, 14, FontStyle.Bold);
 			lblFPS.Value = "FPS: Calculating...";
 			Gui.Add (lblFPS);
+
+            this.Gamearea = new GameArea(100, 100);
 
 
 		}
@@ -114,6 +119,7 @@ namespace hgame1
 				SpriteDrawer.AddSprite (sprite, drawdata);
 			}
 
+            this.Gamearea.MapTiles.Draw();
 
 		}
 
