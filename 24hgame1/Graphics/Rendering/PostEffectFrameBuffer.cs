@@ -55,7 +55,7 @@ namespace hgame1.Graphics.Rendering
 		ShaderProgram shader;
 
 		Vector2 WindowSize = Vector2.Zero;
-		/*
+
 		public PostEffectFrameBuffer (GameWindow gw)
 		{
 			Point size = new Point(gw.Size);
@@ -165,7 +165,7 @@ namespace hgame1.Graphics.Rendering
 			shader.FindUniform ("ScreenSize");
 
 			// Setup lightning
-			LightningEngine.SetupShader (shader);
+			//LightningEngine.SetupShader (shader);
 
 			// uniform locations for debug rendering
 			debugOrthoLocation = GL.GetUniformLocation(debugShader.Program, "mP");
@@ -178,7 +178,7 @@ namespace hgame1.Graphics.Rendering
 				size = new Point (size.X / 2, size.Y / 2);*/
 
 			// Create empty textures
-			/*for(int i=0; i<textures.Length; i++)
+			for(int i=0; i<textures.Length; i++)
 			{
 				// Bind the texture
 				GL.BindTexture(TextureTarget.Texture2D, textures[i]);
@@ -195,11 +195,6 @@ namespace hgame1.Graphics.Rendering
 				                TextureParameterName.TextureMagFilter, 
 				                (int)TextureMagFilter.Nearest);
 			}
-
-			GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, depthBuffer);
-			GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, 
-			                       RenderbufferStorage.DepthComponent32,
-			                       size.X, size.Y);
 
 			GL.Viewport(0,0,size.X,size.Y);
 		}
@@ -218,14 +213,14 @@ namespace hgame1.Graphics.Rendering
 				new Vector3(1,1,0)
 			}; 
 
-			/*///* Scale the vector data to the screen size
-			/*for (int i = 0; i < 4; i++) {
+			// Scale the vector data to the screen size
+			for (int i = 0; i < 4; i++) {
 				vertex [i].X = vertex [i].X * size.X;
 				vertex [i].Y = vertex [i].Y * size.Y;
-			}*/
+			}
 
-				// Send new data
-			/*	GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+			// Send new data
+			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 			GL.BufferData (BufferTarget.ArrayBuffer, (IntPtr)(vertex.Length * Vector3.SizeInBytes), vertex, BufferUsageHint.DynamicDraw);
 			GL.BindBuffer (BufferTarget.ArrayBuffer, 0);
 
@@ -248,10 +243,10 @@ namespace hgame1.Graphics.Rendering
 			shader.Enable ();
 
 			// Send lights
-			shader.SendUniformBlock ("Light", LightningEngine.Buffer.Length * Light.SizeInBytes, LightningEngine.Buffer, BufferUsageHint.StreamDraw);
+			//shader.SendUniformBlock ("Light", LightningEngine.Buffer.Length * Light.SizeInBytes, LightningEngine.Buffer, BufferUsageHint.StreamDraw);
 
 			// Bind textures
-			for(int i=0; i<textures.Length; i++)
+			/*for(int i=0; i<textures.Length; i++)
 			{
 				GL.ActiveTexture(TextureUnit.Texture0 + i);
 				GL.BindTexture (TextureTarget.Texture2D,textures [i]);
@@ -259,16 +254,16 @@ namespace hgame1.Graphics.Rendering
 			}
 
 
-			/*GL.ActiveTexture(TextureUnit.Texture3);
+			GL.ActiveTexture(TextureUnit.Texture3);
 			GL.BindTexture (TextureTarget.Texture2D,textures [3]);
 			GL.Uniform1 (textureLocations[3], 3);*/
 
 			// Bind the VAO to be drawn
-			/*GL.BindVertexArray(vao);
+			GL.BindVertexArray(vao);
 
 			// Set the View and Projection matrices
 			shader.SendUniform ("mP", ref orthoMatrix);
-			shader.SendUniform ("mIP", ref Camera.InvProjectionMatrix);
+			//shader.SendUniform ("mIP", ref Camera.InvProjectionMatrix);
 			shader.SendUniform ("mV", ref Camera.ViewMatrix);
 			shader.SendUniform ("mN", ref Camera.NormalMatrix);
 
@@ -276,12 +271,12 @@ namespace hgame1.Graphics.Rendering
 			shader.SendUniform ("ScreenSize", ref WindowSize);
 
 			// Send the camera position
-			shader.SendUniform ("cameraPosition", ref Camera.Position);
+			//shader.SendUniform ("cameraPosition", ref Camera.Position);
 
 			shader.SendUniform ("brightness", ref brightness);
-			shader.SendUniform ("LightCount", LightningEngine.LightsCount);
+			//shader.SendUniform ("LightCount", LightningEngine.LightsCount);
 
-			/*foreach (var light in LightningEngine.Lights) {
+			//foreach (var light in LightningEngine.Lights) {
 
 				//shader.SendUniform ("Light", light.ToFloatArray());
 
@@ -289,9 +284,9 @@ namespace hgame1.Graphics.Rendering
 
 				// Draw quad
 				//GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
-			}*/
+			//}
 
-			/*GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
+			GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
 
 			// Unbind VAO
 			GL.BindVertexArray(0);
@@ -366,7 +361,7 @@ namespace hgame1.Graphics.Rendering
 
 			//RenderLights ();
 		}
-*/
+
 	}
 }
 
