@@ -6,7 +6,7 @@ using hgame1.Tilemap.Properties;
 
 namespace hgame1.Tilemap
 {
-    class Tile
+    public class Tile
     {
         public Tiletype Tileproperty{ get; private set;}
 

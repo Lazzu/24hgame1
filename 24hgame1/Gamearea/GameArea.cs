@@ -20,8 +20,9 @@ namespace hgame1.Gamearea
 
         public GameArea(int _gameareawidth, int _gameareaheight)
         {
-            this.MapTiles = new Tilemap.Tilemap(_gameareawidth,_gameareaheight);
+            this.MapTiles = new Tilemap.Tilemap(_gameareawidth,_gameareaheight, 100);
             this.MapTiles.Populatetilemap();
+            this.pathfinder.setCurrenttilemapinfo(this.MapTiles.tilemap, 100);
         }
 
         public void AddPlayer (string _name, int _health ,Vector2 _location, float _direction)

@@ -6,6 +6,7 @@ using hgame1.Tilemap.Properties;
 using hgame1.Graphics.Sprites;
 using OpenTK;
 using hgame1.Graphics;
+using hgame1.AI;
 
 namespace hgame1.Tilemap
 {
@@ -18,16 +19,17 @@ namespace hgame1.Tilemap
 
         private int Tilemapwidth, Tilemapheight;
 
-        public Tilemap(int _tilemapwidth,int _tilemapheight){
+        public Tilemap(int _tilemapwidth,int _tilemapheight, int _tileSize){
             this.tilemap = new Tile[_tilemapwidth, _tilemapheight];
             this.Tilemapwidth = _tilemapwidth;
             this.Tilemapheight = _tilemapheight;
+            TileSet set = new TileSet { TileSize = _tileSize };
         }
 
         public void Populatetilemap(){
             for (int i = 0; i < this.Tilemapheight; i++ )
             {
-                for (int j = 0; j < this.Tilemapwidth; )
+                for (int j = 0; j < this.Tilemapwidth; j++ )
                 {
                     this.tilemap[i, j] = new Tile();
                 }

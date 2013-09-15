@@ -13,6 +13,7 @@ namespace hgame1.AI
     {
         
         private Tile[,] currentTileMap;
+        private int TileSize;
 
         public List<Node> closedList;
         public List<Node> openList;
@@ -22,6 +23,12 @@ namespace hgame1.AI
             Node tempNode = new Node(_x,_y,1,1);
             
             return tempNode;
+        }
+
+        public void setCurrenttilemapinfo(Tile[,] _tilemap, int _tilesize)
+        {
+            this.currentTileMap = _tilemap;
+            this.TileSize = _tilesize;
         }
 
         public List<Node> getPath(Node _startpoint, Node _endpoint)
