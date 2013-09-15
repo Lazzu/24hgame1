@@ -25,7 +25,7 @@ namespace hgame1.Graphics.Models
 			{
 				// Find shader uniforms
 				Shader.FindUniforms (new string[]{
-					"mP", "mV", "mM", "mN" // Matrices
+					"mP", "mV", "mM",// "mN" // Matrices
 				});
 			}
 
@@ -43,24 +43,20 @@ namespace hgame1.Graphics.Models
 		{
 			Shader.Enable ();
 
-			Camera.UseModelMatrix (ref modelMatrix);
+			//Camera.UseModelMatrix (ref modelMatrix);
 
 			Shader.SendUniform ("mP", ref Camera.ProjectionMatrix);
 			Shader.SendUniform ("mV", ref Camera.ViewMatrix);
 			Shader.SendUniform ("mM", ref modelMatrix);
-			Shader.SendUniform ("mN", ref Camera.NormalMatrix);
+			//Shader.SendUniform ("mN", ref Camera.NormalMatrix);
 
-			for (int i = 0; i < Textures.Count; i++) {
-				Textures [i].Bind ();
-			}
+			//Textures [0].Bind ();
 
 			for (int i = 0; i < Meshes.Count; i++) {
 				Meshes [i].Render ();
 			}
 
-			for (int i = 0; i < Textures.Count; i++) {
-				Textures [i].UnBind ();
-			}
+			//Textures [0].UnBind ();
 
 			Shader.Disable ();
 		}

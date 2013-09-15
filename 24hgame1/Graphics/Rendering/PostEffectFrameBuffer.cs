@@ -4,6 +4,7 @@ using hgame1.Graphics.Shaders;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using hgame1.Graphics.Models;
+using hgame1.Graphics.Lightning;
 
 namespace hgame1.Graphics.Rendering
 {
@@ -185,6 +186,8 @@ namespace hgame1.Graphics.Rendering
 
 			// Matrix locations for deferred rendering
 			lightShader.FindUniform ("mP");
+			lightShader.FindUniform ("mV");
+			lightShader.FindUniform ("mM");
 
 			// Texture locations for deferred rendering
 			lightShader.FindUniforms (textureLocations);
@@ -193,13 +196,16 @@ namespace hgame1.Graphics.Rendering
 			//shader.FindUniform ("cameraPosition");
 
 			// Screen brightness
-			lightShader.FindUniform ("brightness");
+			//lightShader.FindUniform ("brightness");
 
 			// The light
 			//shader.FindUniform ("LightCount");
 
 			// Screen size
-			lightShader.FindUniform ("ScreenSize");
+			//lightShader.FindUniform ("ScreenSize");
+
+
+			valo.Shader = lightShader;
 
 		}
 
@@ -337,13 +343,21 @@ namespace hgame1.Graphics.Rendering
 				GL.BindTexture (TextureTarget.Texture2D,0);
 			}
 
+			//RenderLights ();
+
 			// Re-enable depth test
 			GL.Enable (EnableCap.DepthTest);
 		}
 
 		void RenderLights()
 		{
+			foreach (var light in LightningEngine.Lights) {
 
+				Matrix4 modelMatrix = Matrix4.CreateTranslation (light.Position) * Matrix4.Scale(10);
+
+				valo.Render (ref modelMatrix);
+
+			}
 		}
 
 		public void StartRender()

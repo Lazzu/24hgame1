@@ -12,6 +12,7 @@ using System.Drawing;
 using hgame1.Gamearea;
 using hgame1.Graphics.Rendering;
 using hgame1.CharacterEntities;
+using hgame1.Graphics.Lightning;
 
 namespace hgame1
 {
@@ -23,7 +24,7 @@ namespace hgame1
 			GraphicsMode.Default.Depth, 
 			GraphicsMode.Default.Stencil, 
 			settings.Graphics.MSAA ),
-		                                       "Mass Murder Simulator", 
+		                                       "genocide simulator 2013", 
 		                                       GameWindowFlags.Default, 
 		                                       DisplayDevice.Default,
 		                                       3, 3, 
@@ -57,6 +58,8 @@ namespace hgame1
 
 		PostEffectFrameBuffer FxFbo;
 
+		Light playerLight;
+
 		protected override void OnLoad (EventArgs e)
 		{
 			GL.Enable (EnableCap.DepthTest);
@@ -87,6 +90,14 @@ namespace hgame1
             this.Gamearea.Playercharacters[0].setLocation(new Vector2((Width / 2), (Height / 2)));
 
 			FxFbo = new PostEffectFrameBuffer (new Point(Size));
+
+			playerLight = new Light ();
+
+			playerLight.Color = new Vector3 (1, 1, 1);
+			playerLight.Intensity = 100;
+			playerLight.Position = new Vector3 (0, 0, 0);
+
+			LightningEngine.Lights.Add (playerLight);
 		}
 
 		Random r = new Random ();
@@ -122,6 +133,8 @@ namespace hgame1
             }
 
             Camera.MoveAtInstantly(this.Gamearea.Playercharacters[0].CharacterLocation - new Vector2(Width/2,Height/2));
+
+			playerLight.Position = new Vector3 (this.Gamearea.Playercharacters[0].CharacterLocation);
 
 			if (Keyboard [OpenTK.Input.Key.Space])
                 Camera.MoveAtInstantly(new Vector2(Width / 2, Height / 2) / (float)e.Time);
@@ -165,6 +178,8 @@ namespace hgame1
 			}
 
 			base.OnRenderFrame (e);
+
+
 
 			if(FxFbo != null){	
 				FxFbo.StopRender ();
