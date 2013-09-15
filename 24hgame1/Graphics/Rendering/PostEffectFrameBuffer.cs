@@ -55,8 +55,8 @@ namespace hgame1.Graphics.Rendering
 		ShaderProgram shader;
 
 		Vector2 WindowSize = Vector2.Zero;
-
-		/*public PostEffectFrameBuffer (GameWindow gw)
+		/*
+		public PostEffectFrameBuffer (GameWindow gw)
 		{
 			Point size = new Point(gw.Size);
 
@@ -80,12 +80,6 @@ namespace hgame1.Graphics.Rendering
 				GL.FramebufferTexture(FramebufferTarget.Framebuffer,FramebufferAttachment.ColorAttachment0+i, textures[i], 0);
 				list [i] = DrawBuffersEnum.ColorAttachment0 + i;
 			}
-
-			// Attach the depth buffer to the framebuffer
-			GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, 
-			                           FramebufferAttachment.DepthAttachment, 
-			                           RenderbufferTarget.Renderbuffer, 
-			                           depthBuffer);
 
 			// Set the list of draw buffers.
 			GL.DrawBuffers(textures.Length, list);
@@ -208,6 +202,169 @@ namespace hgame1.Graphics.Rendering
 			                       size.X, size.Y);
 
 			GL.Viewport(0,0,size.X,size.Y);
+		}
+
+		void ResizeOrtho(Point size)
+		{
+			Matrix4.CreateOrthographicOffCenter (0, size.X, 0, size.Y, 0, 1, out orthoMatrix);
+		}
+
+		void ResizeVertices (Point size)
+		{
+			vertex = new Vector3[4]{
+				new Vector3(0,0,0),
+				new Vector3(1,0,0),
+				new Vector3(0,1,0),
+				new Vector3(1,1,0)
+			}; 
+
+			/*///* Scale the vector data to the screen size
+			/*for (int i = 0; i < 4; i++) {
+				vertex [i].X = vertex [i].X * size.X;
+				vertex [i].Y = vertex [i].Y * size.Y;
+			}*/
+
+				// Send new data
+			/*	GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+			GL.BufferData (BufferTarget.ArrayBuffer, (IntPtr)(vertex.Length * Vector3.SizeInBytes), vertex, BufferUsageHint.DynamicDraw);
+			GL.BindBuffer (BufferTarget.ArrayBuffer, 0);
+
+			WindowSize = new Vector2 (size.X, size.Y);
+		}
+
+		public void Resize(Point size)
+		{
+			ResizeTextures (size);
+			ResizeOrtho (size);
+			ResizeVertices (size);
+		}
+
+		public void RenderOnScreen ()
+		{
+			// Disable depth test to allow drawing on top of everything
+			GL.Disable (EnableCap.DepthTest);
+
+			// Use the shader
+			shader.Enable ();
+
+			// Send lights
+			shader.SendUniformBlock ("Light", LightningEngine.Buffer.Length * Light.SizeInBytes, LightningEngine.Buffer, BufferUsageHint.StreamDraw);
+
+			// Bind textures
+			for(int i=0; i<textures.Length; i++)
+			{
+				GL.ActiveTexture(TextureUnit.Texture0 + i);
+				GL.BindTexture (TextureTarget.Texture2D,textures [i]);
+				shader.SendUniform (textureLocations [i], i);
+			}
+
+
+			/*GL.ActiveTexture(TextureUnit.Texture3);
+			GL.BindTexture (TextureTarget.Texture2D,textures [3]);
+			GL.Uniform1 (textureLocations[3], 3);*/
+
+			// Bind the VAO to be drawn
+			/*GL.BindVertexArray(vao);
+
+			// Set the View and Projection matrices
+			shader.SendUniform ("mP", ref orthoMatrix);
+			shader.SendUniform ("mIP", ref Camera.InvProjectionMatrix);
+			shader.SendUniform ("mV", ref Camera.ViewMatrix);
+			shader.SendUniform ("mN", ref Camera.NormalMatrix);
+
+			// Send current screen size
+			shader.SendUniform ("ScreenSize", ref WindowSize);
+
+			// Send the camera position
+			shader.SendUniform ("cameraPosition", ref Camera.Position);
+
+			shader.SendUniform ("brightness", ref brightness);
+			shader.SendUniform ("LightCount", LightningEngine.LightsCount);
+
+			/*foreach (var light in LightningEngine.Lights) {
+
+				//shader.SendUniform ("Light", light.ToFloatArray());
+
+
+
+				// Draw quad
+				//GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
+			}*/
+
+			/*GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
+
+			// Unbind VAO
+			GL.BindVertexArray(0);
+
+			// Disable shader
+			shader.Disable ();
+
+			// Unbind textures
+			for(int i=0; i<textures.Length; i++)
+			{
+				GL.ActiveTexture(TextureUnit.Texture0 + i);
+				GL.BindTexture (TextureTarget.Texture2D,0);
+			}
+
+			// Re-enable depth test
+			GL.Enable (EnableCap.DepthTest);
+		}
+
+		/// <summary>
+		/// Renders all textures as debug data on screen.
+		/// </summary>
+		public void RenderDebugOnScreen ()
+		{
+			// Disable depth test to allow drawing on top of everything
+			GL.Disable (EnableCap.DepthTest);
+
+			// Bind the VAO to be drawn
+			GL.BindVertexArray(vao);
+
+			// Use the shader
+			debugShader.Enable ();
+
+			GL.ActiveTexture(TextureUnit.Texture0);
+			GL.Uniform1 (debugTextureLocation, 0);
+
+			for(int i = 0; i < textures.Length; i++) {
+
+				// Bind the texture for the shader to use
+				GL.BindTexture (TextureTarget.Texture2D,textures [i]);
+
+				float left = -i;
+				float right = textures.Length-i;
+				// Matrix for positioning the texture on screen
+				Matrix4 tempMatrix = Matrix4.CreateOrthographicOffCenter (left, right, 0, textures.Length, 0, 1);
+
+				// Set the View and Projection matrices
+				GL.UniformMatrix4(debugOrthoLocation, false, ref tempMatrix);
+
+				// Draw quad
+				GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
+
+			}
+
+			// Disable shader
+			debugShader.Disable ();
+
+			// Unbind VAO
+			GL.BindVertexArray(0);
+
+			// Re-enable depth test
+			GL.Enable (EnableCap.DepthTest);
+		}
+
+		public void StartRender()
+		{
+			GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo);
+		}
+
+		public void StopRender()
+		{
+			GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+
+			//RenderLights ();
 		}
 */
 	}
