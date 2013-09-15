@@ -70,7 +70,11 @@ namespace hgame1.Graphics
 		{
 			position += (positionTarget - position) / 4; // Calculate camera position easing
 
+			position = -position;
+
 			Matrix4.CreateTranslation (ref position, out ViewMatrix);
+
+			position = -position;
 		}
 	}
 }

@@ -12,7 +12,7 @@ out vec4 color;
 
 void main(){
 	gl_Position = mP * mV * vec4(TranslateData.x, TranslateData.y, 0, 1.0);
-	gl_PointSize = Texdata.z / 2;
+	gl_PointSize = Texdata.z ;
 	tc = vec3(Texdata.x, Texdata.y, Texdata.z);
 	color = Color;
 }
