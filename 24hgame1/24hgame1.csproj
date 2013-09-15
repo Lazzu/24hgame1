@@ -122,6 +122,8 @@
     <Compile Include="Graphics\Particles\IParticleEmitter.cs" />
     <Compile Include="Graphics\Particles\Emitters\FountainEmitter.cs" />
     <Compile Include="Graphics\Rendering\PostEffectFrameBuffer.cs" />
+    <Compile Include="Graphics\Lightning\Light.cs" />
+    <Compile Include="Graphics\Lightning\LightningEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
@@ -172,10 +174,17 @@
     <None Include="Content\Shaders\lightning.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\Shaders\light.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Shaders\light.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <ItemGroup>
     <Folder Include="Graphics\Particles\Emitters\" />
+    <Folder Include="Graphics\Lightning\" />
   </ItemGroup>
 </Project>

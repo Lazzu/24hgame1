@@ -3,6 +3,7 @@ using OpenTK;
 using hgame1.Graphics.Shaders;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
+using hgame1.Graphics.Models;
 
 namespace hgame1.Graphics.Rendering
 {
@@ -11,9 +12,9 @@ namespace hgame1.Graphics.Rendering
 		int fbo = 0;
 		int depthBuffer = 0;
 
-		int[] textures = new int[3];
+		int[] textures = new int[1];
 		string[] textureLocations = new string[]{
-			"textureSampler","RT1","RT2"//,"RT3"
+			"textureSampler",//"RT1","RT2"//,"RT3"
 		};
 		//int debugTextureLocation;
 
@@ -59,14 +60,16 @@ namespace hgame1.Graphics.Rendering
 
 		int vbo, ebo, vao;
 
-		ShaderProgram debugShader;
+		ShaderProgram lightShader;
 		ShaderProgram shader;
 
 		Vector2 WindowSize = Vector2.Zero;
 
+		Model valo;
+
 		public PostEffectFrameBuffer (Point size)
 		{
-
+			valo = Primitives.Pie (1, Math.PI, 6);
 
 			GL.GenFramebuffers(1, out fbo);
 			GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo);
@@ -151,15 +154,6 @@ namespace hgame1.Graphics.Rendering
 
 			shader.Link ();
 
-
-			// Make the debug shader
-			//debugShader = new ShaderProgram();
-			//debugShader.ProcessShaderFile("shaders/texture.vert", ShaderType.VertexShader);
-			//debugShader.ProcessShaderFile("shaders/texture.frag", ShaderType.FragmentShader);
-
-			//Console.WriteLine ("Link debug shader.");
-			//debugShader.Link ();
-
 			// Matrix locations for deferred rendering
 			shader.FindUniform ("mP");
 			shader.FindUniform ("mIP");
@@ -170,23 +164,43 @@ namespace hgame1.Graphics.Rendering
 			shader.FindUniforms (textureLocations);
 
 			// Camera position uniform
-			shader.FindUniform ("cameraPosition");
+			//shader.FindUniform ("cameraPosition");
 
 			// Screen brightness
 			shader.FindUniform ("brightness");
 
 			// The light
-			shader.FindUniform ("LightCount");
+			//shader.FindUniform ("LightCount");
 
 			// Screen size
 			shader.FindUniform ("ScreenSize");
 
-			// Setup lightning
-			//LightningEngine.SetupShader (shader);
+			// Make the shader
+			lightShader = new ShaderProgram();
 
-			// uniform locations for debug rendering
-			//debugOrthoLocation = GL.GetUniformLocation(debugShader.Program, "mP");
-			//debugTextureLocation = GL.GetUniformLocation (debugShader.Program, "textureSampler");
+			lightShader.ProcessShaderFile ("light.vert", ShaderType.VertexShader);
+			lightShader.ProcessShaderFile ("light.frag", ShaderType.FragmentShader);
+
+			lightShader.Link ();
+
+			// Matrix locations for deferred rendering
+			lightShader.FindUniform ("mP");
+
+			// Texture locations for deferred rendering
+			lightShader.FindUniforms (textureLocations);
+
+			// Camera position uniform
+			//shader.FindUniform ("cameraPosition");
+
+			// Screen brightness
+			lightShader.FindUniform ("brightness");
+
+			// The light
+			//shader.FindUniform ("LightCount");
+
+			// Screen size
+			lightShader.FindUniform ("ScreenSize");
+
 		}
 
 		void ResizeTextures(Point size)
@@ -325,6 +339,11 @@ namespace hgame1.Graphics.Rendering
 
 			// Re-enable depth test
 			GL.Enable (EnableCap.DepthTest);
+		}
+
+		void RenderLights()
+		{
+
 		}
 
 		public void StartRender()
