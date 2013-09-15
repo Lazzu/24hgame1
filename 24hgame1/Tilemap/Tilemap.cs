@@ -23,7 +23,7 @@ namespace hgame1.Tilemap
             this.tilemap = new Tile[_tilemapwidth, _tilemapheight];
             this.Tilemapwidth = _tilemapwidth;
             this.Tilemapheight = _tilemapheight;
-            TileSet set = new TileSet { TileSize = _tileSize };
+			TileSet = new TileSet { TileSize = _tileSize };
         }
 
         public void Populatetilemap(){
