@@ -27,6 +27,7 @@ namespace hgame1.Tilemap
             this.Tilemapheight = _tilemapheight;
 			TileSet = new TileSet { TileSize = _tileSize };
             this.TileSet.Tiles.Add("basicsprite", new Sprite(TextureManager.Get("default"), ShaderProgramManager.Get("sprite"), 100, new Vector2(0,0) ));
+            this.TileSet.Tiles.Add("basicearth", new Sprite(TextureManager.Get("basicearth"), ShaderProgramManager.Get("sprite"), 100, new Vector2(0, 0)));
         }
 
         public void Populatetilemap(){

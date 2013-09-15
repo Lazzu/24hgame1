@@ -15,8 +15,8 @@ namespace hgame1.Gamearea
         public Tilemap.Tilemap MapTiles { get; private set; }
         Pathfinder pathfinder = new Pathfinder();
 
-        public List<Character> AIcharacters;
-        public List<Character> Playercharacters;
+        public List<Character> AIcharacters = new List<Character>();
+        public List<Character> Playercharacters = new List<Character>();
 
         public GameArea(int _gameareawidth, int _gameareaheight)
         {
