@@ -9,16 +9,17 @@ namespace hgame1.Graphics.Rendering
 	public class PostEffectFrameBuffer
 	{
 		int fbo = 0;
+		int depthBuffer = 0;
 
 		int[] textures = new int[3];
 		string[] textureLocations = new string[]{
-			"RT0","RT1","RT2"//,"RT3"
+			"textureSampler","RT1","RT2"//,"RT3"
 		};
-		int debugTextureLocation;
+		//int debugTextureLocation;
 
 		Matrix4 orthoMatrix;
 
-		int debugOrthoLocation;
+		//int debugOrthoLocation;
 
 		bool oldschool = false;
 		public bool Oldschool {
@@ -47,6 +48,13 @@ namespace hgame1.Graphics.Rendering
 			new Vector3(1,1,0)
 		};
 
+		/*Vector2[] texcoord = new Vector2[4]{
+			new Vector2(0,0),
+			new Vector2(1,0),
+			new Vector2(0,1),
+			new Vector2(1,1)
+		};*/
+
 		ushort[] index = new ushort[4]{ 0,1,2,3 };
 
 		int vbo, ebo, vao;
@@ -56,12 +64,15 @@ namespace hgame1.Graphics.Rendering
 
 		Vector2 WindowSize = Vector2.Zero;
 
-		/*public PostEffectFrameBuffer (GameWindow gw)
+		public PostEffectFrameBuffer (Point size)
 		{
-			Point size = new Point(gw.Size);
+
 
 			GL.GenFramebuffers(1, out fbo);
 			GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo);
+
+			// Depth buffer
+			GL.GenRenderbuffers(1, out depthBuffer);
 
 			// Generate textures to render to
 			GL.GenTextures(textures.Length, textures);
@@ -135,19 +146,19 @@ namespace hgame1.Graphics.Rendering
 			// Make the shader
 			shader = new ShaderProgram();
 
-			shader.ProcessShaderFile ("shaders/deferred.vert", ShaderType.VertexShader);
-			shader.ProcessShaderFile ("shaders/deferred.frag", ShaderType.FragmentShader);
+			shader.ProcessShaderFile ("lightning.vert", ShaderType.VertexShader);
+			shader.ProcessShaderFile ("lightning.frag", ShaderType.FragmentShader);
 
 			shader.Link ();
 
 
 			// Make the debug shader
-			debugShader = new ShaderProgram();
-			debugShader.ProcessShaderFile("shaders/texture.vert", ShaderType.VertexShader);
-			debugShader.ProcessShaderFile("shaders/texture.frag", ShaderType.FragmentShader);
+			//debugShader = new ShaderProgram();
+			//debugShader.ProcessShaderFile("shaders/texture.vert", ShaderType.VertexShader);
+			//debugShader.ProcessShaderFile("shaders/texture.frag", ShaderType.FragmentShader);
 
-			Console.WriteLine ("Link debug shader.");
-			debugShader.Link ();
+			//Console.WriteLine ("Link debug shader.");
+			//debugShader.Link ();
 
 			// Matrix locations for deferred rendering
 			shader.FindUniform ("mP");
@@ -171,11 +182,11 @@ namespace hgame1.Graphics.Rendering
 			shader.FindUniform ("ScreenSize");
 
 			// Setup lightning
-			LightningEngine.SetupShader (shader);
+			//LightningEngine.SetupShader (shader);
 
 			// uniform locations for debug rendering
-			debugOrthoLocation = GL.GetUniformLocation(debugShader.Program, "mP");
-			debugTextureLocation = GL.GetUniformLocation (debugShader.Program, "textureSampler");
+			//debugOrthoLocation = GL.GetUniformLocation(debugShader.Program, "mP");
+			//debugTextureLocation = GL.GetUniformLocation (debugShader.Program, "textureSampler");
 		}
 
 		void ResizeTextures(Point size)
@@ -184,7 +195,7 @@ namespace hgame1.Graphics.Rendering
 				size = new Point (size.X / 2, size.Y / 2);*/
 
 			// Create empty textures
-			/*for(int i=0; i<textures.Length; i++)
+			for(int i=0; i<textures.Length; i++)
 			{
 				// Bind the texture
 				GL.BindTexture(TextureTarget.Texture2D, textures[i]);
@@ -209,7 +220,124 @@ namespace hgame1.Graphics.Rendering
 
 			GL.Viewport(0,0,size.X,size.Y);
 		}
-*/
+
+		void ResizeOrtho(Point size)
+		{
+			Matrix4.CreateOrthographicOffCenter (0, size.X, 0, size.Y, 0, -1, out orthoMatrix);
+		}
+
+		void ResizeVertices (Point size)
+		{
+			vertex = new Vector3[4]{
+				new Vector3(0,0,0),
+				new Vector3(size.X,0,0),
+				new Vector3(0,size.Y,0),
+				new Vector3(size.X,size.Y,0)
+			}; 
+
+			// Scale the vector data to the screen size
+			/*for (int i = 0; i < 4; i++) {
+				vertex [i].X = vertex [i].X * size.X;
+				vertex [i].Y = vertex [i].Y * size.Y;
+			}*/
+
+			// Send new data
+			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+			GL.BufferData (BufferTarget.ArrayBuffer, (IntPtr)(vertex.Length * Vector3.SizeInBytes), vertex, BufferUsageHint.DynamicDraw);
+			GL.BindBuffer (BufferTarget.ArrayBuffer, 0);
+
+			WindowSize = new Vector2 (size.X, size.Y);
+		}
+
+		public void Resize(Point size)
+		{
+			ResizeTextures (size);
+			ResizeOrtho (size);
+			ResizeVertices (size);
+		}
+
+		public void RenderOnScreen ()
+		{
+			// Disable depth test to allow drawing on top of everything
+			GL.Disable (EnableCap.DepthTest);
+
+			// Use the shader
+			shader.Enable ();
+
+			// Send lights
+			//shader.SendUniformBlock ("Light", LightningEngine.Buffer.Length * Light.SizeInBytes, LightningEngine.Buffer, BufferUsageHint.StreamDraw);
+
+			// Bind textures
+			for(int i=0; i<textures.Length; i++)
+			{
+				GL.ActiveTexture(TextureUnit.Texture0 + i);
+				GL.BindTexture (TextureTarget.Texture2D,textures [i]);
+				shader.SendUniform (textureLocations [i], i);
+			}
+
+
+			/*GL.ActiveTexture(TextureUnit.Texture3);
+			GL.BindTexture (TextureTarget.Texture2D,textures [3]);
+			GL.Uniform1 (textureLocations[3], 3);*/
+
+			// Bind the VAO to be drawn
+			GL.BindVertexArray(vao);
+
+			// Set the View and Projection matrices
+			shader.SendUniform ("mP", ref orthoMatrix);
+			//shader.SendUniform ("mIP", ref Camera.InvProjectionMatrix);
+			shader.SendUniform ("mV", ref Camera.ViewMatrix);
+			shader.SendUniform ("mN", ref Camera.NormalMatrix);
+
+			// Send current screen size
+			shader.SendUniform ("ScreenSize", ref WindowSize);
+
+			// Send the camera position
+			//shader.SendUniform ("cameraPosition", ref Camera.Position);
+
+			shader.SendUniform ("brightness", ref brightness);
+			//shader.SendUniform ("LightCount", LightningEngine.LightsCount);
+
+			/*foreach (var light in LightningEngine.Lights) {
+
+				//shader.SendUniform ("Light", light.ToFloatArray());
+
+
+
+				// Draw quad
+				//GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
+			}*/
+
+			GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
+
+			// Unbind VAO
+			GL.BindVertexArray(0);
+
+			// Disable shader
+			shader.Disable ();
+
+			// Unbind textures
+			for(int i=0; i<textures.Length; i++)
+			{
+				GL.ActiveTexture(TextureUnit.Texture0 + i);
+				GL.BindTexture (TextureTarget.Texture2D,0);
+			}
+
+			// Re-enable depth test
+			GL.Enable (EnableCap.DepthTest);
+		}
+
+		public void StartRender()
+		{
+			GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo);
+		}
+
+		public void StopRender()
+		{
+			GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+
+			//RenderLights ();
+		}
 	}
 }
 

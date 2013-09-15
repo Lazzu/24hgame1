@@ -10,6 +10,7 @@ using hgame1.Graphics.GUI;
 using hgame1.Graphics.GUI.Controllers;
 using System.Drawing;
 using hgame1.Gamearea;
+using hgame1.Graphics.Rendering;
 using hgame1.CharacterEntities;
 
 namespace hgame1
@@ -22,7 +23,7 @@ namespace hgame1
 			GraphicsMode.Default.Depth, 
 			GraphicsMode.Default.Stencil, 
 			settings.Graphics.MSAA ),
-		                                       "Linear Quest", 
+		                                       "Mass Murder Simulator", 
 		                                       GameWindowFlags.Default, 
 		                                       DisplayDevice.Default,
 		                                       3, 3, 
@@ -54,6 +55,8 @@ namespace hgame1
 
         GameArea Gamearea;
 
+		PostEffectFrameBuffer FxFbo;
+
 		protected override void OnLoad (EventArgs e)
 		{
 			GL.Enable (EnableCap.DepthTest);
@@ -83,6 +86,7 @@ namespace hgame1
             this.Gamearea.AddPlayer("Pelaaja", 100, new Vector2(25, 25), 0);
             this.Gamearea.Playercharacters[0].setLocation(new Vector2((Width / 2), (Height / 2)));
 
+			FxFbo = new PostEffectFrameBuffer (new Point(Size));
 		}
 
 		Random r = new Random ();
@@ -149,9 +153,25 @@ namespace hgame1
 
 		protected override void OnRenderFrame (FrameEventArgs e)
 		{
+			GL.Scissor(0,0,Width,Height);
+
+			// Clear the main framebuffer
 			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+			if(FxFbo != null)
+			{
+				FxFbo.StartRender ();
+				GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+			}
+
 			base.OnRenderFrame (e);
+
+			if(FxFbo != null){	
+				FxFbo.StopRender ();
+				FxFbo.RenderOnScreen ();
+			}
+
+			Gui.Render (e);
 
 			SwapBuffers ();
 

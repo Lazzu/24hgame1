@@ -62,7 +62,7 @@ namespace hgame1.Tilemap
 			if (ymax > Tilemapheight)
 				ymax = Tilemapheight;
 
-			Console.WriteLine ("xmin: {0} xmax: {1} ymin: {2} ymax: {3}", xmin, xmax, ymin, ymax);
+			//Console.WriteLine ("xmin: {0} xmax: {1} ymin: {2} ymax: {3}", xmin, xmax, ymin, ymax);
 
 			for (int i = xmin; i < xmax; i++ )
 			{
