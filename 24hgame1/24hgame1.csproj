@@ -117,9 +117,10 @@
     <Compile Include="Graphics\Models\Loaders\WavefrontObj\ModelLoader.cs" />
     <Compile Include="Graphics\Particles\Particle.cs" />
     <Compile Include="Graphics\Particles\ParticleEngine.cs" />
-    <Compile Include="Graphics\Particles\ParticleEmitter.cs" />
     <Compile Include="Graphics\Sprites\SpriteCollection.cs" />
     <Compile Include="Tilemap\TileSet.cs" />
+    <Compile Include="Graphics\Particles\IParticleEmitter.cs" />
+    <Compile Include="Graphics\Particles\Emitters\FountainEmitter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
@@ -167,4 +168,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Graphics\Particles\Emitters\" />
+  </ItemGroup>
 </Project>

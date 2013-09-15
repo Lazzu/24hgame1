@@ -86,7 +86,6 @@ namespace hgame1.Tilemap
 					SpriteDrawer.AddSprite (floor, floordrawdata);
 					SpriteDrawer.AddSprite (wall, walldrawdata);
 					SpriteDrawer.AddSprite (ceiling, ceilingdrawdata);
-
 				}
 			}
 		}

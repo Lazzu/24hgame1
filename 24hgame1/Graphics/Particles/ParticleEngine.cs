@@ -10,7 +10,7 @@ namespace hgame1.Graphics.Particles
 	{
 
 		public static List<Particle> Particles = new List<Particle>();
-		public static List<ParticleEmitter> Emitters = new List<ParticleEmitter>();
+		public static List<IParticleEmitter> Emitters = new List<IParticleEmitter>();
 
 		public static void Init(GameWindow gw)
 		{
@@ -46,7 +46,9 @@ namespace hgame1.Graphics.Particles
 
 			// Emit new particles
 			foreach (var emitter in Emitters) {
-				Particles.AddRange (emitter.Emit ());
+				Particle[] p = emitter.Emit (e.Time);
+				if(p != null)
+					Particles.AddRange (p);
 			}
 		}
 
