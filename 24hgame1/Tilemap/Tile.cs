@@ -28,7 +28,7 @@ namespace hgame1.Tilemap
         public Tile()
         {
             this.Tileproperty = Tiletype.Floor;
-            this.Floorspritename = "basicsprite";
+            this.Floorspritename = "basicearth";
             this.Wallspritename = "basicsprite";
             this.Ceilingspritename = "basicsprite";
         }

@@ -134,7 +134,11 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Content\Textures\basicearth.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Content\Shaders\sprite.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -11,6 +11,7 @@ using hgame1.Graphics.GUI.Controllers;
 using System.Drawing;
 using hgame1.Gamearea;
 using hgame1.Graphics.Rendering;
+using hgame1.CharacterEntities;
 
 namespace hgame1
 {
@@ -67,6 +68,7 @@ namespace hgame1
 			base.OnLoad (e);
 
 			TextureManager.LoadTexture("default.png", "default");
+            TextureManager.LoadTexture("basicearth.png", "basicearth");
 			ShaderProgramManager.LoadXml ("sprite", "sprite.shader");
 
 			sprite = new Sprite(TextureManager.Get("default"), ShaderProgramManager.Get("sprite"), 100, new Vector2(0,0) );
@@ -81,6 +83,8 @@ namespace hgame1
 			Gui.Add (lblFPS);
 
             this.Gamearea = new GameArea(100, 100);
+            this.Gamearea.AddPlayer("Pelaaja", 100, new Vector2(25, 25), 0);
+            this.Gamearea.Playercharacters[0].setLocation(new Vector2((Width / 2), (Height / 2)));
 
 			FxFbo = new PostEffectFrameBuffer (new Point(Size));
 		}
@@ -93,20 +97,34 @@ namespace hgame1
 
 			base.OnUpdateFrame (e);
 
-			if (Keyboard [OpenTK.Input.Key.A])
-				Camera.Move (new Vector2 (1, 0) / (float)e.Time);
+            if (Keyboard[OpenTK.Input.Key.A])
+            {
+                //Camera.Move(new Vector2(1, 0) / (float)e.Time);
+                this.Gamearea.Playercharacters[0].Move(new Vector2(-5f,0));
+            }
 
-			if (Keyboard [OpenTK.Input.Key.D])
-				Camera.Move (new Vector2 (-1, 0) / (float)e.Time);
+            if (Keyboard[OpenTK.Input.Key.D])
+            {
+                //Camera.Move(new Vector2(-1, 0) / (float)e.Time);
+                this.Gamearea.Playercharacters[0].Move(new Vector2(5f, 0));
+            }
 
-			if (Keyboard [OpenTK.Input.Key.W])
-				Camera.Move (new Vector2 (0, 1) / (float)e.Time);
+            if (Keyboard[OpenTK.Input.Key.W])
+            {
+                //Camera.Move(new Vector2(0, 1) / (float)e.Time);
+                this.Gamearea.Playercharacters[0].Move(new Vector2(0, -5f));
+            }
 
-			if (Keyboard [OpenTK.Input.Key.S])
-				Camera.Move (new Vector2 (0, -1) / (float)e.Time);
+            if (Keyboard[OpenTK.Input.Key.S])
+            {
+                //Camera.Move(new Vector2(0, -1) / (float)e.Time);
+                this.Gamearea.Playercharacters[0].Move(new Vector2(0, 5f));
+            }
+
+            Camera.MoveAtInstantly(this.Gamearea.Playercharacters[0].CharacterLocation - new Vector2(Width/2,Height/2));
 
 			if (Keyboard [OpenTK.Input.Key.Space])
-				Camera.MoveAtInstantly (new Vector2 (Width/2, Height/2));
+                Camera.MoveAtInstantly(new Vector2(Width / 2, Height / 2) / (float)e.Time);
 
 			for(int i=0; i<100; i++)
 			{
@@ -121,6 +139,10 @@ namespace hgame1
 
 				SpriteDrawer.AddSprite (sprite, drawdata);
 			}
+
+            foreach(Character character in Gamearea.Playercharacters){
+                character.Draw();
+            }
 
             this.Gamearea.MapTiles.Draw();
 

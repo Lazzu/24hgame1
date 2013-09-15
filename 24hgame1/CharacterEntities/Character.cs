@@ -6,12 +6,17 @@ using hgame1.CharacterEntities.Properties;
 using hgame1.AI.Properties;
 using hgame1.AI;
 using OpenTK;
+using hgame1.Graphics.Sprites;
+using hgame1.Graphics.Textures;
+using hgame1.Graphics.Shaders;
+
 
 namespace hgame1.CharacterEntities
 {
     class Character
     {
         public CharacterControltype Charactertype { get; private set; }
+        public Sprite CharacterSprite { get; private set; }
 
         // generic variables
         public Vector2 CharacterLocation { get; private set; }
@@ -33,6 +38,7 @@ namespace hgame1.CharacterEntities
             this.CharacterLocation = _location;
             this.CharacterDirection = _direction;
             this.CharacterHealth = _health;
+            this.CharacterSprite = new Sprite(TextureManager.Get("default"), ShaderProgramManager.Get("sprite"), 100, new Vector2(0, 0));
         }
 
         /// <summary>
@@ -57,6 +63,21 @@ namespace hgame1.CharacterEntities
         public void setLocation(Vector2 _location)
         {
             this.CharacterLocation = _location;
+        }
+
+        public void Move(Vector2 _moveamount)
+        {
+            this.CharacterLocation = this.CharacterLocation + _moveamount;
+        }
+
+        public void Draw()
+        {
+            SpriteDrawData characterdrawdata = new SpriteDrawData();
+            characterdrawdata.Color = new Vector4(1, 1, 1, 1);
+            characterdrawdata.Texdata = new Vector3(this.CharacterSprite.TextureCoordinates.X, this.CharacterSprite.TextureCoordinates.Y, 100);
+            characterdrawdata.TranslateData = new Vector3(this.CharacterLocation.X, this.CharacterLocation.Y, 0);
+
+            SpriteDrawer.AddSprite(this.CharacterSprite, characterdrawdata);
         }
     }
 }
