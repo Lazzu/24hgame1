@@ -72,7 +72,7 @@ namespace hgame1.Graphics.GUI
 
         static void HandleRenderFrame (object sender, FrameEventArgs e)
         {
-			Render (e);
+			//Render (e);
         }
 
         static void HandleResize (object sender, EventArgs e)

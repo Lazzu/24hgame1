@@ -9,16 +9,17 @@ namespace hgame1.Graphics.Rendering
 	public class PostEffectFrameBuffer
 	{
 		int fbo = 0;
+		int depthBuffer = 0;
 
 		int[] textures = new int[3];
 		string[] textureLocations = new string[]{
-			"RT0","RT1","RT2"//,"RT3"
+			"textureSampler","RT1","RT2"//,"RT3"
 		};
-		int debugTextureLocation;
+		//int debugTextureLocation;
 
 		Matrix4 orthoMatrix;
 
-		int debugOrthoLocation;
+		//int debugOrthoLocation;
 
 		bool oldschool = false;
 		public bool Oldschool {
@@ -47,6 +48,13 @@ namespace hgame1.Graphics.Rendering
 			new Vector3(1,1,0)
 		};
 
+		/*Vector2[] texcoord = new Vector2[4]{
+			new Vector2(0,0),
+			new Vector2(1,0),
+			new Vector2(0,1),
+			new Vector2(1,1)
+		};*/
+
 		ushort[] index = new ushort[4]{ 0,1,2,3 };
 
 		int vbo, ebo, vao;
@@ -56,12 +64,15 @@ namespace hgame1.Graphics.Rendering
 
 		Vector2 WindowSize = Vector2.Zero;
 
-		public PostEffectFrameBuffer (GameWindow gw)
+		public PostEffectFrameBuffer (Point size)
 		{
-			Point size = new Point(gw.Size);
+
 
 			GL.GenFramebuffers(1, out fbo);
 			GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo);
+
+			// Depth buffer
+			GL.GenRenderbuffers(1, out depthBuffer);
 
 			// Generate textures to render to
 			GL.GenTextures(textures.Length, textures);
@@ -80,6 +91,12 @@ namespace hgame1.Graphics.Rendering
 				GL.FramebufferTexture(FramebufferTarget.Framebuffer,FramebufferAttachment.ColorAttachment0+i, textures[i], 0);
 				list [i] = DrawBuffersEnum.ColorAttachment0 + i;
 			}
+
+			// Attach the depth buffer to the framebuffer
+			GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, 
+			                           FramebufferAttachment.DepthAttachment, 
+			                           RenderbufferTarget.Renderbuffer, 
+			                           depthBuffer);
 
 			// Set the list of draw buffers.
 			GL.DrawBuffers(textures.Length, list);
@@ -129,19 +146,19 @@ namespace hgame1.Graphics.Rendering
 			// Make the shader
 			shader = new ShaderProgram();
 
-			shader.ProcessShaderFile ("shaders/deferred.vert", ShaderType.VertexShader);
-			shader.ProcessShaderFile ("shaders/deferred.frag", ShaderType.FragmentShader);
+			shader.ProcessShaderFile ("lightning.vert", ShaderType.VertexShader);
+			shader.ProcessShaderFile ("lightning.frag", ShaderType.FragmentShader);
 
 			shader.Link ();
 
 
 			// Make the debug shader
-			debugShader = new ShaderProgram();
-			debugShader.ProcessShaderFile("shaders/texture.vert", ShaderType.VertexShader);
-			debugShader.ProcessShaderFile("shaders/texture.frag", ShaderType.FragmentShader);
+			//debugShader = new ShaderProgram();
+			//debugShader.ProcessShaderFile("shaders/texture.vert", ShaderType.VertexShader);
+			//debugShader.ProcessShaderFile("shaders/texture.frag", ShaderType.FragmentShader);
 
-			Console.WriteLine ("Link debug shader.");
-			debugShader.Link ();
+			//Console.WriteLine ("Link debug shader.");
+			//debugShader.Link ();
 
 			// Matrix locations for deferred rendering
 			shader.FindUniform ("mP");
@@ -168,8 +185,8 @@ namespace hgame1.Graphics.Rendering
 			//LightningEngine.SetupShader (shader);
 
 			// uniform locations for debug rendering
-			debugOrthoLocation = GL.GetUniformLocation(debugShader.Program, "mP");
-			debugTextureLocation = GL.GetUniformLocation (debugShader.Program, "textureSampler");
+			//debugOrthoLocation = GL.GetUniformLocation(debugShader.Program, "mP");
+			//debugTextureLocation = GL.GetUniformLocation (debugShader.Program, "textureSampler");
 		}
 
 		void ResizeTextures(Point size)
@@ -196,28 +213,33 @@ namespace hgame1.Graphics.Rendering
 				                (int)TextureMagFilter.Nearest);
 			}
 
+			GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, depthBuffer);
+			GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, 
+			                       RenderbufferStorage.DepthComponent32,
+			                       size.X, size.Y);
+
 			GL.Viewport(0,0,size.X,size.Y);
 		}
 
 		void ResizeOrtho(Point size)
 		{
-			Matrix4.CreateOrthographicOffCenter (0, size.X, 0, size.Y, 0, 1, out orthoMatrix);
+			Matrix4.CreateOrthographicOffCenter (0, size.X, 0, size.Y, 0, -1, out orthoMatrix);
 		}
 
 		void ResizeVertices (Point size)
 		{
 			vertex = new Vector3[4]{
 				new Vector3(0,0,0),
-				new Vector3(1,0,0),
-				new Vector3(0,1,0),
-				new Vector3(1,1,0)
+				new Vector3(size.X,0,0),
+				new Vector3(0,size.Y,0),
+				new Vector3(size.X,size.Y,0)
 			}; 
 
 			// Scale the vector data to the screen size
-			for (int i = 0; i < 4; i++) {
+			/*for (int i = 0; i < 4; i++) {
 				vertex [i].X = vertex [i].X * size.X;
 				vertex [i].Y = vertex [i].Y * size.Y;
-			}
+			}*/
 
 			// Send new data
 			GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
@@ -246,7 +268,7 @@ namespace hgame1.Graphics.Rendering
 			//shader.SendUniformBlock ("Light", LightningEngine.Buffer.Length * Light.SizeInBytes, LightningEngine.Buffer, BufferUsageHint.StreamDraw);
 
 			// Bind textures
-			/*for(int i=0; i<textures.Length; i++)
+			for(int i=0; i<textures.Length; i++)
 			{
 				GL.ActiveTexture(TextureUnit.Texture0 + i);
 				GL.BindTexture (TextureTarget.Texture2D,textures [i]);
@@ -254,7 +276,7 @@ namespace hgame1.Graphics.Rendering
 			}
 
 
-			GL.ActiveTexture(TextureUnit.Texture3);
+			/*GL.ActiveTexture(TextureUnit.Texture3);
 			GL.BindTexture (TextureTarget.Texture2D,textures [3]);
 			GL.Uniform1 (textureLocations[3], 3);*/
 
@@ -276,7 +298,7 @@ namespace hgame1.Graphics.Rendering
 			shader.SendUniform ("brightness", ref brightness);
 			//shader.SendUniform ("LightCount", LightningEngine.LightsCount);
 
-			//foreach (var light in LightningEngine.Lights) {
+			/*foreach (var light in LightningEngine.Lights) {
 
 				//shader.SendUniform ("Light", light.ToFloatArray());
 
@@ -284,7 +306,7 @@ namespace hgame1.Graphics.Rendering
 
 				// Draw quad
 				//GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
-			//}
+			}*/
 
 			GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
 
@@ -305,51 +327,6 @@ namespace hgame1.Graphics.Rendering
 			GL.Enable (EnableCap.DepthTest);
 		}
 
-		/// <summary>
-		/// Renders all textures as debug data on screen.
-		/// </summary>
-		public void RenderDebugOnScreen ()
-		{
-			// Disable depth test to allow drawing on top of everything
-			GL.Disable (EnableCap.DepthTest);
-
-			// Bind the VAO to be drawn
-			GL.BindVertexArray(vao);
-
-			// Use the shader
-			debugShader.Enable ();
-
-			GL.ActiveTexture(TextureUnit.Texture0);
-			GL.Uniform1 (debugTextureLocation, 0);
-
-			for(int i = 0; i < textures.Length; i++) {
-
-				// Bind the texture for the shader to use
-				GL.BindTexture (TextureTarget.Texture2D,textures [i]);
-
-				float left = -i;
-				float right = textures.Length-i;
-				// Matrix for positioning the texture on screen
-				Matrix4 tempMatrix = Matrix4.CreateOrthographicOffCenter (left, right, 0, textures.Length, 0, 1);
-
-				// Set the View and Projection matrices
-				GL.UniformMatrix4(debugOrthoLocation, false, ref tempMatrix);
-
-				// Draw quad
-				GL.DrawRangeElements(BeginMode.TriangleStrip, 0, index.Length-1, index.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
-
-			}
-
-			// Disable shader
-			debugShader.Disable ();
-
-			// Unbind VAO
-			GL.BindVertexArray(0);
-
-			// Re-enable depth test
-			GL.Enable (EnableCap.DepthTest);
-		}
-
 		public void StartRender()
 		{
 			GL.BindFramebuffer(FramebufferTarget.Framebuffer, fbo);
@@ -361,7 +338,6 @@ namespace hgame1.Graphics.Rendering
 
 			//RenderLights ();
 		}
-
 	}
 }
 
