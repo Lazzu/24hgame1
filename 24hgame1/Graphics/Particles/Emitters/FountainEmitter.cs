@@ -24,11 +24,20 @@ namespace hgame1.Graphics.Particles.Emitters
 			};
 		}
 
+		bool UpdateParticle(Particle particle, double time)
+		{
+			return false;
+		}
+
 		#region IParticleEmitter implementation
 
-		public int PPS {
-			get;
-			set;
+		public float PPS {
+			get {
+				throw new NotImplementedException ();
+			}
+			set {
+				throw new NotImplementedException ();
+			}
 		}
 
 		public Particle[] Emit (double time)
@@ -45,13 +54,10 @@ namespace hgame1.Graphics.Particles.Emitters
 				particles [i].Updaters += UpdateParticle;
 			}
 
-
+			return null;
 		}
 
-		bool UpdateParticle(Particle particle, double time)
-		{
 
-		}
 
 		#endregion
 	}

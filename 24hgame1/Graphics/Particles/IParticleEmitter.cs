@@ -4,8 +4,7 @@ namespace hgame1.Graphics.Particles
 {
 	public interface IParticleEmitter
 	{
-		Particle[] Emit ();
-		bool UpdateParticle (Particle particle, double time);
+		Particle[] Emit (double time);
 		float PPS { get; set; }
 	}
 }
